@@ -1,0 +1,55 @@
+{
+  "name": "@classdo/classdo",
+  "version": "0.0.1",
+  "description": "ClassDo API client for browsers and NodeJS.",
+  "keywords": [
+    "ClassDo",
+    "collaboration",
+    "video chat",
+    "virtual room"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "typedoc": "typedoc --mode file --out docs/ ./src",
+    "codegen": "graphql-codegen --config codegen.yml",
+    "test": "jest",
+    "clean": "rm -rf dist",
+    "build": "yarn clean && tsc -p ."
+  },
+  "bugs": {
+    "url": "https://github.com/ClassDo/classdo-js/issues"
+  },
+  "homepage": "https://github.com/ClassDo/classdo-js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ClassDo/classdo-js.git"
+  },
+  "author": "ClassDo",
+  "license": "MIT",
+  "dependencies": {
+    "apollo": "^2.21.2",
+    "apollo-cache-inmemory": "^1.6.5",
+    "apollo-client": "^2.6.8",
+    "apollo-link": "^1.2.13",
+    "apollo-link-context": "^1.0.19",
+    "apollo-link-error": "^1.1.12",
+    "apollo-link-http": "^1.5.16",
+    "node-fetch": "^2.6.0",
+    "typed-graphqlify": "^2.2.3"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^1.11.2",
+    "@graphql-codegen/typescript": "1.11.2",
+    "@types/jest": "^24.9.0",
+    "@types/node-fetch": "^2.5.4",
+    "graphql": "^14.5.8",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.3.0",
+    "typedoc": "^0.16.9",
+    "typescript": "^3.7.5"
+  }
+}
