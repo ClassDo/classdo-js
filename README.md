@@ -7,13 +7,13 @@ ClassDo API client for browsers and NodeJS.
 Install via npm
 
 ```
-npm install classdo-js
+npm install classdo
 ```
 
 Install via yarn
 
 ```
-yarn add classdo-js
+yarn add classdo
 ```
 
 ### Making requests
@@ -21,9 +21,11 @@ yarn add classdo-js
 ```js
 const ClassDoJS = require('classdo-js')
 const client = new ClassDoJS.Client({ accessToken: 'xxxxxxxx' })
-client.users.getAuthenticated().then((user, _error) => {
+client.users.getAuthenticated().then(user => {
   // Fetch the current user
   console.log(user)
+}).catch(e => {
+  console.error(e)
 })
 ```
 
@@ -57,7 +59,7 @@ client.organizations.list()
 |----------|--------|--------|-----------|
 | id       | false  | string | organization id   |
 | name     | false  | string | organization name |
-| per_page | false  | number | results per page (max 100) |
+| perPage  | false  | number | results per page (max 100) |
 | page     | false  | number | page number of the results to fetch |
 | ref      | false  | Object | reference for getting related objects |
 
@@ -159,7 +161,7 @@ TBD
 
 
 ```
-client.invitation.list()
+client.invitations.list()
 ```
 
 ##### Parameters
@@ -170,7 +172,7 @@ TBD
 #### Send invitation
 
 ```
-client.invitation.send({ organizationId: 'xxx', roomId: 'xxx', email: 'xxx', phoneNumber: 'xxx', inviteeName: 'xxx' })
+client.invitations.send({ organizationId: 'xxx', roomId: 'xxx', email: 'xxx', phoneNumber: 'xxx', inviteeName: 'xxx' })
 ```
 
 | name           | required | type   | description     |
@@ -187,7 +189,7 @@ client.invitation.send({ organizationId: 'xxx', roomId: 'xxx', email: 'xxx', pho
 #### Accept invitation
 
 ```
-client.invitation.accept(id)
+client.invitations.accept(id)
 ```
 
 > Limitation: For now you can only accept invitation sended by sms.
@@ -197,7 +199,7 @@ client.invitation.accept(id)
 #### Decline invitation
 
 ```
-client.invitation.accept(id)
+client.invitations.accept(id)
 ```
 
 > Limitation: For now you can only decline invitation sended by sms.
