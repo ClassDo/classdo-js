@@ -41,42 +41,10 @@ client.users.getAuthenticated()
 
 ### Organization
 
-#### Get
+#### Get the authenticated organization
 
 ```
-client.organizations.get(id)
-```
-
-#### List your organizations
-
-```
-client.organizations.list()
-```
-
-##### Parameters
-
-| name     |required|type    |description|
-|----------|--------|--------|-----------|
-| id       | false  | string | organization id   |
-| name     | false  | string | organization name |
-| perPage  | false  | number | results per page (max 100) |
-| page     | false  | number | page number of the results to fetch |
-| ref      | false  | Object | reference for getting related objects |
-
-#### Create new organization
-
-```
-client.organizations.create()
-```
-
-##### Parameters
-
-TBD
-
-#### Delete your organization
-
-```
-client.organizations.delete(id)
+client.organizations.getAuthenticated()
 ```
 
 ##### Parameters
@@ -91,7 +59,7 @@ TBD
 client.rooms.get(id)
 ```
 
-#### List your organizations
+#### List your organization's rooms
 
 ```
 client.rooms.list()
@@ -103,7 +71,7 @@ client.rooms.list()
 |----------|--------|--------|-----------|
 | id       | false  | string | organization id   |
 | name     | false  | string | organization name |
-| per_page | false  | number | results per page (max 100) |
+| perPage  | false  | number | results per page (max 100) |
 | page     | false  | number | page number of the results to fetch |
 | ref      | false  | Object | reference for getting related objects |
 
@@ -159,7 +127,6 @@ TBD
 
 #### Get invitation list
 
-
 ```
 client.invitations.list()
 ```
@@ -177,8 +144,7 @@ client.invitations.send({ organizationId: 'xxx', roomId: 'xxx', email: 'xxx', ph
 
 | name           | required | type   | description     |
 |----------------|----------|--------|-----------------|
-| organizationId | true     | string | organization id |
-| roomId         | false    | string | room id         |
+| roomId         | true    | string | room id         |
 | email          | false    | string | email address   |
 | phoneNumber    | false    | string | phoneNumber     |
 | inviteeName    | true     | string | invitee name    |
