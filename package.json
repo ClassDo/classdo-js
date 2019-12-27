@@ -1,0 +1,10 @@
+{
+  "name": "classdo",
+  "version": "0.0.1",
+  "description": "ClassDo API client for browsers and NodeJS.",
+  "main": "index.js",
+  "repository": "git@github.com:ClassDo/classdo-js.git",
+  "author": "ClassDo",
+  "license": "MIT",
+  "private": false
+}
