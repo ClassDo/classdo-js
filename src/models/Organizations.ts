@@ -7,3 +7,4 @@ export const Organization = {
 }
 
 export type OrganizationType = typeof Organization
+export type OrganizationKeys = keyof OrganizationType

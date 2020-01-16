@@ -2,18 +2,18 @@ import { params, types } from 'typed-graphqlify'
 import { RoomMemberWhereInput } from '../generated/graphql'
 
 export const RoomMember = {
-  id: types.string,
+  id: types.string
 }
 
 export type RoomMemberType = typeof RoomMember
-export type RoomMeberKeys = keyof RoomMemberType
+export type RoomMemberKeys = keyof RoomMemberType
 
-export const buildRoomMemberEdge = <T extends RoomMeberKeys> (roomMember: Pick<RoomMemberType, T>) => ({
+export const buildRoomMemberEdge = <T extends RoomMemberKeys> (roomMember: Pick<RoomMemberType, T>) => ({
   node: roomMember,
   cursor: types.string
 })
 
-export const buildRoomMembers = <T extends RoomMeberKeys> (roomMember: Pick<RoomMemberType, T>) => ({
+export const buildRoomMembers = <T extends RoomMemberKeys> (roomMember: Pick<RoomMemberType, T>) => ({
   totalCount: types.number,
   pageInfo: {
     hasNextPage: types.boolean,
@@ -33,4 +33,4 @@ export function buildRoomMemberQuery<T extends keyof RoomMemberType>(args: RoomM
   return params(args as any, buildRoomMembers(pickedField))
 }
 
-export const RoomMembers = buildRoomMemberQuery(RoomMember, ['id'])
+export const RoomMembers = buildRoomMemberQuery(RoomMember, [])

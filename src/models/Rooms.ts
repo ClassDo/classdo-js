@@ -1,20 +1,21 @@
-import { params, types, query } from 'typed-graphqlify'
-import { Client } from '../Client'
+import { params, types } from 'typed-graphqlify'
 import { RoomsInput } from '../generated/graphql'
-import { Organization, OrganizationType } from './Organizations'
-import gql from 'graphql-tag'
-import { RoomMember, RoomMembers, RoomMemberType, RoomMeberKeys, buildRoomMembers } from './RoomMembers'
+import { Organization, OrganizationType, OrganizationKeys } from './Organizations'
+import { RoomMember, RoomMemberType, RoomMemberKeys, buildRoomMembers } from './RoomMembers'
+import { pick } from './Core'
 
 export const Room = {
   id: types.string,
   name: types.string,
-  description: types.string,
-  organization: Organization,
-  members: RoomMembers
+  description: types.string
 }
 
-type RoomType = typeof Room
-type RoomKeys = keyof RoomType
+export type RoomType = typeof Room
+export type RoomKeys = keyof RoomType
+export type RoomOption<O, M> = {
+  organization?: { fields: O[] },
+  members?: { fields: M[] }
+}
 
 export const buildRoomEdge = <T> (room: T) => ({
   node: room,
@@ -35,91 +36,46 @@ export const buildRooms = <T> (args: any, room: T) => (
  )
 )
 
-type QueryResult<R, O, RM> = {
-  viewer: {
-    rooms: {
-      totalCount: number,
-      pageInfo: {
-        hasNextPage: boolean,
-        hasPreviousPage: boolean,
-        startCursor: string | undefined,
-        endCursor: string | undefined
-      },
-      edges: {
-        cursor: string
-        node: Omit<R, 'organization' | 'members'>
-          & (O extends {} ? { organization: O } : {})
-          & (RM extends {} ? { members: RM } : {})
-      }[]
-    }
-  }
+export type RoomResult<R, O, RM> =
+  R & (O extends {} ? { organization: O } : {})
+    & (RM extends {} ? { members: RM } : {})
+
+export type RoomsResult<R, O, RM> = {
+  totalCount: number,
+  pageInfo: {
+    hasNextPage: boolean,
+    hasPreviousPage: boolean,
+    startCursor: string | undefined,
+    endCursor: string | undefined
+  },
+  edges: {
+    cursor: string
+    node: RoomResult<R, O, RM>
+  }[]
 }
 
-type Option<O, M> = {
-  organization?: { fields: O[] },
-  members?: { fields: M[] }
-}
-
-function pick <M extends Object, F extends keyof M> (model: M, fields: F[]) {
-  return fields.reduce((p, c) => {
-    p[c] = model[c]
-    return p
-  }, {} as Pick<M, F>)
-}
-
-function createQuery
-  <T extends RoomKeys,
-   O extends keyof OrganizationType,
-   RM extends RoomMeberKeys
-  >
-  (args: { input: RoomsInput }, fields: T[], option: Option<O, RM>):
-  QueryResult<
-    Pick<RoomType, T>,
-    O extends keyof OrganizationType ? Pick<OrganizationType, O > : null,
-    Pick<RoomMemberType, RM>
+export function buildRoomsQuery
+  <R extends RoomKeys,
+   O extends (OrganizationKeys | null),
+   RM extends (RoomMemberKeys | null)
+  >(
+    args: RoomsInput | undefined,
+    fields: R[],
+    option: RoomOption<O, RM>
+  ): RoomsResult<
+    Pick<RoomType, R>,
+    O extends OrganizationKeys ? Pick<OrganizationType, O> : null,
+    RM extends RoomMemberKeys ? Pick<RoomMemberType, RM> : null
   > {
   const pickedFields: any = pick(Room, fields)
   if (option.organization) {
-    pickedFields['organization'] = pick(Organization, option.organization.fields)
+    pickedFields['organization'] = pick(Organization, option.organization.fields as any)
   }
   if (option.members) {
-    pickedFields['members'] = buildRoomMembers(pick(RoomMember, option.members.fields))
+    pickedFields['members'] = buildRoomMembers(pick(RoomMember, option.members.fields as any))
   }
-  const query = {
-    viewer: {
-      rooms: buildRooms(args, pickedFields)
-    }
-  }
-  return query
+  return buildRooms(args || { input: {}}, pickedFields)
 }
 
-
-export const FULL_FIELDS = ['id', 'name', 'description', 'organization'] as const
-
-type Params<R extends RoomKeys, O extends keyof OrganizationType | void, RM extends RoomMeberKeys> = {
-  fields: R[],
-  with?: Option<O, RM>
-}
-export function get<R extends RoomKeys, O extends keyof OrganizationType, RM extends RoomMeberKeys >
-  (id: string, params: Params<R, O, RM>) {
-  return createQuery(
-    { input: { where: { id } } },
-    params.fields || [],
-    params.with || {}
-  )
-}
-
-const client = new Client({ apiKey: 'u6SlsOP2Va2iaW5NjBm1I9c1XeLhhJiW36euYc2h' })
-const src = get('"ck56jgshb02hg0726ox49by9v"', {
-  fields: ['id', 'name'],
-  with: {
-    organization: { fields: ['name'] },
-    members: { fields: ['id'] }
-  }
-})
-
-console.log(query(src))
-const result = client.getClient().query({ query: gql(query(src))})
-result.then(v => {
-  console.log(JSON.stringify(v.data))
-})
+const rooms = buildRoomsQuery(undefined, ['id'], { organization: { fields: ['id']}})
+rooms.edges[0].node.organization.id
