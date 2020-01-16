@@ -24,7 +24,6 @@ export const buildRoomMembers = <T extends RoomMemberKeys> (roomMember: Pick<Roo
   edges: [buildRoomMemberEdge(roomMember)]
 })
 
-
 export function buildRoomMemberQuery<T extends keyof RoomMemberType>(args: RoomMemberWhereInput, fields: T[]) {
   const pickedField = fields.reduce((p, c) => {
     p[c] = RoomMember[c]

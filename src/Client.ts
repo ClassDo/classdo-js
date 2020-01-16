@@ -1,4 +1,4 @@
-import { ApolloClient } from 'apollo-client'
+import { ApolloClient, ApolloQueryResult } from 'apollo-client'
 import fetch from 'node-fetch'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory'
@@ -6,6 +6,8 @@ import { from } from 'apollo-link'
 import { setContext } from 'apollo-link-context'
 import { onError } from 'apollo-link-error'
 import Log from 'loglevel'
+import { query } from 'typed-graphqlify'
+import gql from 'graphql-tag'
 
 const url = 'https://api.classdo.localhost:9001/graphql'
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
@@ -58,5 +60,9 @@ export class Client {
 
   getClient() {
     return this.client
+  }
+
+  query<R>(src: Object): Promise<ApolloQueryResult<R>> {
+    return this.getClient().query({ query: gql(query(src)) })
   }
 }

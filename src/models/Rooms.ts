@@ -54,28 +54,28 @@ export type RoomsResult<R, O, RM> = {
   }[]
 }
 
+export type BuildRoomsQueryParams<R, O, RM> = {
+  args?: RoomsInput,
+  fields: R[],
+  with?: RoomOption<O, RM>
+}
 export function buildRoomsQuery
-  <R extends RoomKeys,
+  <R extends (RoomKeys | null),
    O extends (OrganizationKeys | null),
    RM extends (RoomMemberKeys | null)
   >(
-    args: RoomsInput | undefined,
-    fields: R[],
-    option: RoomOption<O, RM>
+    params: BuildRoomsQueryParams<R, O, RM>
   ): RoomsResult<
-    Pick<RoomType, R>,
+    R extends RoomKeys ? Pick<RoomType, R> : null,
     O extends OrganizationKeys ? Pick<OrganizationType, O> : null,
     RM extends RoomMemberKeys ? Pick<RoomMemberType, RM> : null
   > {
-  const pickedFields: any = pick(Room, fields)
-  if (option.organization) {
-    pickedFields['organization'] = pick(Organization, option.organization.fields as any)
+  const pickedFields: any = pick(Room, params.fields as any || [])
+  if (params.with && params.with.organization) {
+    pickedFields['organization'] = pick(Organization, params.with.organization.fields as any)
   }
-  if (option.members) {
-    pickedFields['members'] = buildRoomMembers(pick(RoomMember, option.members.fields as any))
+  if (params.with && params.with.members) {
+    pickedFields['members'] = buildRoomMembers(pick(RoomMember, params.with.members.fields as any))
   }
-  return buildRooms(args || { input: {}}, pickedFields)
+  return buildRooms(params.args || { input: {}}, pickedFields)
 }
-
-const rooms = buildRoomsQuery(undefined, ['id'], { organization: { fields: ['id']}})
-rooms.edges[0].node.organization.id
