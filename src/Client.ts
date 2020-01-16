@@ -55,6 +55,7 @@ export class Client {
   constructor(params: { apiKey: string }) {
     this.client = createClient(params.apiKey)
   }
+
   getClient() {
     return this.client
   }
