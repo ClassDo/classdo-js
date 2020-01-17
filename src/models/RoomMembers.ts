@@ -1,5 +1,6 @@
 import { params, types } from 'typed-graphqlify'
 import { RoomMemberWhereInput } from '../generated/graphql'
+import { pick } from '../Utils'
 
 export const RoomMember = {
   id: types.string
@@ -25,10 +26,7 @@ export const buildRoomMembers = <T extends RoomMemberKeys> (roomMember: Pick<Roo
 })
 
 export function buildRoomMemberQuery<T extends keyof RoomMemberType>(args: RoomMemberWhereInput, fields: T[]) {
-  const pickedField = fields.reduce((p, c) => {
-    p[c] = RoomMember[c]
-    return p
-  }, {} as Pick<RoomMemberType, T>)
+  const pickedField = pick(RoomMember, fields)
   return params(args as any, buildRoomMembers(pickedField))
 }
 

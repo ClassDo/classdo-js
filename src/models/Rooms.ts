@@ -2,7 +2,7 @@ import { params, types } from 'typed-graphqlify'
 import { RoomsInput } from '../generated/graphql'
 import { Organization, OrganizationType, OrganizationKeys } from './Organizations'
 import { RoomMember, RoomMemberType, RoomMemberKeys, buildRoomMembers } from './RoomMembers'
-import { pick } from './Core'
+import { pick } from '../Utils'
 
 export const Room = {
   id: types.string,

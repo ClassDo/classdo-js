@@ -2,7 +2,7 @@ import { types } from 'typed-graphqlify'
 import { RoomType, RoomsResult, RoomKeys, buildRoomsQuery, BuildRoomsQueryParams } from './Rooms'
 import { RoomMemberKeys, RoomMemberType } from './RoomMembers'
 import { OrganizationKeys, OrganizationType } from './Organizations'
-import { pick } from './Core'
+import { pick } from '../Utils'
 
 const Viewer = {
   id: types.string,
