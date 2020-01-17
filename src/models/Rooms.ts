@@ -1,8 +1,10 @@
 import { params, types } from 'typed-graphqlify'
-import { RoomsInput } from '../generated/graphql'
+import { ViewerRoomsArgs } from '../generated/graphql'
 import { Organization, OrganizationType, OrganizationKeys } from './Organizations'
-import { RoomMember, RoomMemberType, RoomMemberKeys, buildRoomMembers } from './RoomMembers'
-import { pick } from './Core'
+import { RoomMember, RoomMemberKeys, buildRoomMembers, RoomMembersResult } from './RoomMembers'
+import { pick } from '../Utils'
+import { Connection } from './Connection'
+import { RoomMembersArgs } from '../generated/graphql'
 
 export const Room = {
   id: types.string,
@@ -12,18 +14,32 @@ export const Room = {
 
 export type RoomType = typeof Room
 export type RoomKeys = keyof RoomType
+export type RoomResult<
+  R extends RoomKeys | null,
+  O extends OrganizationKeys | null,
+  RM extends RoomMemberKeys | null
+> =
+  ([R] extends [RoomKeys] ? Pick<RoomType, R> : {}) &
+  ([O] extends [OrganizationKeys] ? { organization: Pick<OrganizationType, O> } : {}) &
+  ([RM] extends [RoomMemberKeys] ? { members: RoomMembersResult<RM> } : {})
+
+export type RoomsResult<
+  R extends RoomKeys | null,
+  O extends OrganizationKeys | null,
+  RM extends RoomMemberKeys | null
+> = Connection<RoomResult<R, O, RM>>
 export type RoomOption<O, M> = {
   organization?: { fields: O[] },
-  members?: { fields: M[] }
+  members?: { args?: RoomMembersArgs, fields: M[] }
 }
 
-export const buildRoomEdge = <T> (room: T) => ({
+const buildRoomEdge = <T> (room: T) => ({
   node: room,
   cursor: types.string
 })
 
-export const buildRooms = <T> (args: any, room: T) => (
-  params(args, {
+const buildRooms = <T> (args: ViewerRoomsArgs | void, room: T) => {
+  const rooms = {
     totalCount: types.number,
     pageInfo: {
       hasNextPage: types.boolean,
@@ -32,50 +48,25 @@ export const buildRooms = <T> (args: any, room: T) => (
       endCursor: types.optional.string
     },
     edges: [buildRoomEdge(room)]
-   }
- )
-)
-
-export type RoomResult<R, O, RM> =
-  R & (O extends {} ? { organization: O } : {})
-    & (RM extends {} ? { members: RM } : {})
-
-export type RoomsResult<R, O, RM> = {
-  totalCount: number,
-  pageInfo: {
-    hasNextPage: boolean,
-    hasPreviousPage: boolean,
-    startCursor: string | undefined,
-    endCursor: string | undefined
-  },
-  edges: {
-    cursor: string
-    node: RoomResult<R, O, RM>
-  }[]
+  }
+  return args ? params(args as any, rooms) : rooms
 }
 
 export function buildRoomsQuery
   <R extends RoomKeys,
-   O extends (OrganizationKeys | null),
-   RM extends (RoomMemberKeys | null)
+   O extends OrganizationKeys | null,
+   RM extends RoomMemberKeys | null
   >(
-    args: RoomsInput | undefined,
+    args: ViewerRoomsArgs | void,
     fields: R[],
     option: RoomOption<O, RM>
-  ): RoomsResult<
-    Pick<RoomType, R>,
-    O extends OrganizationKeys ? Pick<OrganizationType, O> : null,
-    RM extends RoomMemberKeys ? Pick<RoomMemberType, RM> : null
-  > {
+  ): RoomsResult<R, O, RM> {
   const pickedFields: any = pick(Room, fields)
   if (option.organization) {
     pickedFields['organization'] = pick(Organization, option.organization.fields as any)
   }
   if (option.members) {
-    pickedFields['members'] = buildRoomMembers(pick(RoomMember, option.members.fields as any))
+    pickedFields['members'] = buildRoomMembers(option.members.args, pick(RoomMember, option.members.fields as any))
   }
-  return buildRooms(args || { input: {}}, pickedFields)
+  return buildRooms(args, pickedFields)
 }
-
-const rooms = buildRoomsQuery(undefined, ['id'], { organization: { fields: ['id']}})
-rooms.edges[0].node.organization.id

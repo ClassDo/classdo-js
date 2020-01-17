@@ -1,11 +1,9 @@
-import { Client } from '../Client'
-import { types, query } from 'typed-graphqlify'
-import { RoomType, RoomsResult, RoomKeys, RoomOption, buildRoomsQuery } from './Rooms'
-import { RoomMemberKeys, RoomMemberType } from './RoomMembers'
-import { OrganizationKeys, OrganizationType } from './Organizations'
-import { pick } from './Core'
-import { RoomsInput } from '../generated/graphql'
-import gql from 'graphql-tag'
+import { types } from 'typed-graphqlify'
+import { RoomsResult, RoomKeys, RoomOption, buildRoomsQuery } from './Rooms'
+import { RoomMemberKeys } from './RoomMembers'
+import { OrganizationKeys } from './Organizations'
+import { pick } from '../Utils'
+import { ViewerRoomsArgs } from '../generated/graphql'
 
 const Viewer = {
   id: types.string,
@@ -18,13 +16,13 @@ export type ViewerKeys = keyof typeof Viewer
 export type ViewerOption<R, R_O, R_M> = {
   rooms?: {
     fields: R[],
-    args?: RoomsInput,
+    args?: ViewerRoomsArgs,
     with?: RoomOption<R_O, R_M>
   }
 }
 
-export type ViewerResult<V, R> =
-  V & (R extends {} ? { rooms: R } : {})
+export type ViewerResult<V extends ViewerKeys, R> =
+  Pick<ViewerType, V> & (R extends {} ? { rooms: R } : {})
 
 export function buildViewerQuery <
   V extends ViewerKeys,
@@ -33,13 +31,7 @@ export function buildViewerQuery <
   R_M extends RoomMemberKeys | null,
 > (fields: V[], option: ViewerOption<R, R_O, R_M>):
   { viewer:
-    ViewerResult<V,
-      RoomsResult<
-        R extends RoomKeys ? Pick<RoomType, R> : null,
-        R_O extends OrganizationKeys ? Pick<OrganizationType, R_O> : null,
-        R_M extends RoomMemberKeys ? Pick<RoomMemberType, R_M> : null
-      >
-    >
+    ViewerResult<V, RoomsResult<R, R_O, R_M>>
   } {
   const pickedFields: any = pick(Viewer, fields || [])
   if (option.rooms) {
@@ -51,21 +43,3 @@ export function buildViewerQuery <
   }
   return { viewer: pickedFields }
 }
-
-const client = new Client({ apiKey: 'u6SlsOP2Va2iaW5NjBm1I9c1XeLhhJiW36euYc2h' })
-const src = buildViewerQuery(['id'], {
-  rooms: {
-    fields: ['id', 'name'],
-    with: {
-      organization: { fields: ['id'] },
-      members: { fields: ['id'] },
-    }
-  }
-})
-src.viewer.rooms.edges[0].node.organization.id
-src.viewer.rooms.edges[0].node.members.id
-const result = client.getClient().query({ query: gql(query(src))})
-console.log(result)
-result.then(v => {
-  console.log(v)
-})

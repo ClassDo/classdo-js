@@ -25,6 +25,7 @@ export type Invitation = {
 };
 
 export type InvitationsSendInput = {
+  locale: Locale,
   contactInfo: Scalars['String'],
   contactType: ContactType,
   contactFullName: Scalars['String'],
@@ -47,6 +48,11 @@ export type IOrganization = {
   rooms: Rooms,
   roles: OrganizationMemberRoles,
 };
+
+export enum Locale {
+  En = 'En',
+  Ja = 'Ja'
+}
 
 export type Mutation = {
    __typename?: 'Mutation',
@@ -290,7 +296,12 @@ export type Room = {
   name: Scalars['String'],
   description: Scalars['String'],
   organization: Organization,
-  members: Array<RoomMember>,
+  members: RoomMembers,
+};
+
+
+export type RoomMembersArgs = {
+  input?: Maybe<RoomMembersInput>
 };
 
 export type RoomCreateInput = {
@@ -317,6 +328,15 @@ export type RoomMemberEdge = {
   cursor: Scalars['String'],
 };
 
+export enum RoomMemberOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  CreatedAtAsc = 'createdAt_ASC',
+  CreatedAtDesc = 'createdAt_DESC',
+  UpdatedAtAsc = 'updatedAt_ASC',
+  UpdatedAtDesc = 'updatedAt_DESC'
+}
+
 export type RoomMembers = {
    __typename?: 'RoomMembers',
   totalCount: Scalars['Int'],
@@ -327,6 +347,16 @@ export type RoomMembers = {
 export type RoomMembersAddInput = {
   roomId: Scalars['ID'],
   userIds: Array<Scalars['ID']>,
+};
+
+export type RoomMembersInput = {
+  where?: Maybe<RoomMemberWhereInput>,
+  orderBy?: Maybe<RoomMemberOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
 };
 
 export type RoomMemberWhereInput = {
