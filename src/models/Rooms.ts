@@ -1,11 +1,12 @@
 import { params, types } from 'typed-graphqlify'
 import { ViewerRoomsArgs } from '../generated/graphql'
 import { Organization, OrganizationType, OrganizationKeys } from './Organizations'
-import { RoomMemberKeys, buildRoomMemberQuery, RoomMembersResult, RoomMembersOption } from './RoomMembers'
+import { RoomMemberKeys, buildRoomMembersQuery, RoomMembersResult, RoomMembersOption } from './RoomMembers'
 import { pick } from '../Utils'
 import { Connection } from './Connection'
 import { RoomMembersArgs } from '../generated/graphql'
 import { UserKeys } from './Users'
+import { UserProfileKeys } from './UserProfiles'
 
 export const Room = {
   id: types.string,
@@ -19,22 +20,24 @@ export type RoomResult<
   R extends RoomKeys | null,
   O extends OrganizationKeys | null,
   RM extends RoomMemberKeys | null,
-  RM_U extends UserKeys | null
+  RM_U extends UserKeys | null,
+  RM_U_UP extends UserProfileKeys | null,
 > =
   ([R] extends [RoomKeys] ? Pick<RoomType, R> : {}) &
   ([O] extends [OrganizationKeys] ? { organization: Pick<OrganizationType, O> } : {}) &
-  ([RM] extends [RoomMemberKeys] ? { members: RoomMembersResult<RM, RM_U> } : {})
+  ([RM] extends [RoomMemberKeys] ? { members: RoomMembersResult<RM, RM_U, RM_U_UP> } : {})
 
 export type RoomsResult<
   R extends RoomKeys | null,
   O extends OrganizationKeys | null,
   RM extends RoomMemberKeys | null,
-  RM_U extends UserKeys | null
-> = Connection<RoomResult<R, O, RM, RM_U>>
+  RM_U extends UserKeys | null,
+  RM_U_UP extends UserProfileKeys | null,
+> = Connection<RoomResult<R, O, RM, RM_U, RM_U_UP>>
 
-export type RoomOption<O, RM, RM_U> = {
+export type RoomOption<O, RM, RM_U, RM_U_UP> = {
   organization?: { fields: O[] },
-  members?: { args?: RoomMembersArgs, fields: RM[], with?: RoomMembersOption<RM_U> }
+  members?: { args?: RoomMembersArgs, fields: RM[], with?: RoomMembersOption<RM_U, RM_U_UP> }
 }
 
 const buildRoomEdge = <T> (room: T) => ({
@@ -60,18 +63,19 @@ export function buildRoomsQuery
   <R extends RoomKeys,
    O extends OrganizationKeys | null,
    RM extends RoomMemberKeys | null,
-   RM_U extends UserKeys | null
+   RM_U extends UserKeys | null,
+   RM_U_UP extends UserProfileKeys | null,
   >(
     args: ViewerRoomsArgs | void,
     fields: R[],
-    option: RoomOption<O, RM, RM_U>
-  ): RoomsResult<R, O, RM, RM_U> {
+    option: RoomOption<O, RM, RM_U, RM_U_UP>
+  ): RoomsResult<R, O, RM, RM_U, RM_U_UP> {
   const pickedFields: any = pick(Room, fields)
   if (option.organization) {
     pickedFields['organization'] = pick(Organization, option.organization.fields as any)
   }
   if (option.members) {
-    pickedFields['members'] = buildRoomMemberQuery(
+    pickedFields['members'] = buildRoomMembersQuery(
       option.members.args,
       option.members.fields as any,
       option.members.with || {}

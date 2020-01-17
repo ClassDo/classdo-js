@@ -2,7 +2,8 @@ import { params, types } from 'typed-graphqlify'
 import { RoomMembersArgs } from '../generated/graphql'
 import { Connection } from './Connection'
 import { pick } from '../Utils'
-import { User, UserKeys, UserType } from './Users'
+import { UserKeys, UserResult, UserOption, buildUserQuery } from './Users'
+import { UserProfileKeys } from './UserProfiles'
 
 export const RoomMember = {
   id: types.string
@@ -13,18 +14,20 @@ export type RoomMemberKeys = keyof RoomMemberType
 
 export type RoomMemberResult<
   RM extends RoomMemberKeys,
-  U extends UserKeys | null
+  U extends UserKeys | null,
+  U_UP extends UserProfileKeys | null
 > =
   Pick<RoomMemberType, RM> &
-  ([U] extends [UserKeys] ? { user: Pick<UserType, U> } : {})
+  ([U] extends [UserKeys] ? { user: UserResult<U, U_UP> } : {})
 
 export type RoomMembersResult<
   RM extends RoomMemberKeys,
-  U extends UserKeys | null
-> = Connection<RoomMemberResult<RM, U>>
+  U extends UserKeys | null,
+  U_UP extends UserProfileKeys | null
+> = Connection<RoomMemberResult<RM, U, U_UP>>
 
-export type RoomMembersOption<U> = {
-  user?: { fields: U[] }
+export type RoomMembersOption<U, U_UP> = {
+  user?: { fields: U[], with?: UserOption<U_UP> }
 }
 
 export const buildRoomMemberEdge = <T> (roomMember: T) => ({
@@ -46,15 +49,16 @@ export const buildRoomMembers = <T> (args: RoomMembersArgs | void, roomMember: T
   return args ? params(args as any, roomMembers) : roomMembers
 }
 
-export function buildRoomMemberQuery<
+export function buildRoomMembersQuery<
   RM extends RoomMemberKeys,
-  U extends UserKeys | null
+  U extends UserKeys | null,
+  U_UP extends UserProfileKeys | null,
 >(
-  args: RoomMembersArgs | void, fields: RM[], option: RoomMembersOption<U> 
-): RoomMembersResult<RM, U> {
+  args: RoomMembersArgs | void, fields: RM[], option: RoomMembersOption<U, U_UP> 
+): RoomMembersResult<RM, U, U_UP> {
   const pickedField: any = pick(RoomMember, fields)
   if (option.user) {
-    pickedField['user'] = pick(User, option.user.fields as any)
+    pickedField['user'] = buildUserQuery(option.user.fields as any, option.user.with || {})
   }
   return buildRoomMembers(args, pickedField as any)
 }

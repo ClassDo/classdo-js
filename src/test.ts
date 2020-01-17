@@ -12,7 +12,14 @@ const src = buildViewerQuery(['id'], {
       organization: { fields: ['id', 'name'] },
       members: {
         fields: ['id'],
-        with: { user: { fields: ['id'] } }
+        with: {
+          user: {
+            fields: ['id'],
+            with: {
+              profile: { fields: ['id', 'firstName'] }
+            }
+          }
+        }
       }
     }
   }
@@ -31,5 +38,6 @@ result.then(v => {
     console.log(v.data.viewer.rooms.edges[0].node)
     console.log(v.data.viewer.rooms.edges[0].node.members.edges)
     console.log(v.data.viewer.rooms.edges[0].node.members.edges[0].node.user)
+    console.log(v.data.viewer.rooms.edges[0].node.members.edges[0].node.user.profile)
   }
 })
