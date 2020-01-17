@@ -4,6 +4,7 @@ import { RoomMemberKeys } from './RoomMembers'
 import { OrganizationKeys } from './Organizations'
 import { pick } from '../Utils'
 import { ViewerRoomsArgs } from '../generated/graphql'
+import { UserKeys } from './Users'
 
 const Viewer = {
   id: types.string,
@@ -13,11 +14,11 @@ const Viewer = {
 
 export type ViewerType = typeof Viewer
 export type ViewerKeys = keyof typeof Viewer
-export type ViewerOption<R, R_O, R_M> = {
+export type ViewerOption<R, R_O, R_M, R_M_U> = {
   rooms?: {
     fields: R[],
     args?: ViewerRoomsArgs,
-    with?: RoomOption<R_O, R_M>
+    with?: RoomOption<R_O, R_M, R_M_U>
   }
 }
 
@@ -29,9 +30,10 @@ export function buildViewerQuery <
   R extends RoomKeys | null,
   R_O extends OrganizationKeys | null,
   R_M extends RoomMemberKeys | null,
-> (fields: V[], option: ViewerOption<R, R_O, R_M>):
+  R_M_U extends UserKeys | null
+> (fields: V[], option: ViewerOption<R, R_O, R_M, R_M_U>):
   { viewer:
-    ViewerResult<V, RoomsResult<R, R_O, R_M>>
+    ViewerResult<V, RoomsResult<R, R_O, R_M, R_M_U>>
   } {
   const pickedFields: any = pick(Viewer, fields || [])
   if (option.rooms) {

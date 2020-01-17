@@ -10,14 +10,18 @@ const src = buildViewerQuery(['id'], {
     fields: ['id', 'name'],
     with: {
       organization: { fields: ['id', 'name'] },
-      members: { fields: ['id'] }
+      members: {
+        fields: ['id'],
+        with: { user: { fields: ['id'] } }
+      }
     }
   }
 })
 src.viewer.rooms.edges[0].node.organization.id
 src.viewer.rooms.edges[0].node.organization.name
-// src.viewer.rooms.edges[0].node.organization.description
 src.viewer.rooms.edges[0].node.members.edges[0].node.id
+src.viewer.rooms.edges[0].node.members.edges[0].node
+// src.viewer.rooms.edges[0].node.organization.description
 
 const result = client.getClient().query<typeof src>({ query: gql(query(src))})
 console.log(result)
@@ -26,5 +30,6 @@ result.then(v => {
   if (v.data) {
     console.log(v.data.viewer.rooms.edges[0].node)
     console.log(v.data.viewer.rooms.edges[0].node.members.edges)
+    console.log(v.data.viewer.rooms.edges[0].node.members.edges[0].node.user)
   }
 })
