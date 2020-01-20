@@ -1,5 +1,5 @@
 import { params, types } from 'typed-graphqlify'
-import { RoomMembersArgs } from '../generated/graphql'
+import { RoomMembersArgs, MutationAddRoomMembersArgs } from '../generated/graphql'
 import { Connection } from './Connection'
 import { pick } from '../Utils'
 import { UserKeys, UserResult, UserOption, buildUserQuery } from './Users'
@@ -49,6 +49,14 @@ export const buildRoomMembers = <T> (args: RoomMembersArgs | void, roomMember: T
   return args ? params(args as any, roomMembers) : roomMembers
 }
 
+function resolveOption<
+  U extends UserKeys | null,
+  U_UP extends UserProfileKeys | null,
+>(option: RoomMembersOption<U, U_UP>) {
+  const user = option.user ? { user: buildUserQuery(option.user.fields as any, option.user.with || {}) } : {}
+  return { ...user }
+}
+
 export function buildRoomMembersQuery<
   RM extends RoomMemberKeys,
   U extends UserKeys | null,
@@ -61,4 +69,18 @@ export function buildRoomMembersQuery<
     pickedField['user'] = buildUserQuery(option.user.fields as any, option.user.with || {})
   }
   return buildRoomMembers(args, pickedField as any)
+}
+
+export function buildAddRoomMembersMutation<
+  RM extends RoomMemberKeys,
+  U extends UserKeys | null,
+  U_UP extends UserProfileKeys | null,
+> (
+  args: MutationAddRoomMembersArgs, fields: RM[], option?: RoomMembersOption<U, U_UP>
+): { addRoomMembers: RoomMemberResult<RM, U, U_UP> } {
+  const pickedFields: any = pick(RoomMember, fields)
+  const resolvedOption = option ? resolveOption(option) : {}
+  return {
+     addRoomMembers: params(args as any, { ...pickedFields, ...resolvedOption })
+  }
 }
