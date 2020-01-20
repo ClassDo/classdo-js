@@ -59,6 +59,42 @@ const buildRooms = <T> (args: ViewerRoomsArgs | void, room: T) => {
   return args ? params(args as any, rooms) : rooms
 }
 
+function resolveOption<
+  O extends OrganizationKeys | null,
+  RM extends RoomMemberKeys | null,
+  RM_U extends UserKeys | null,
+  RM_U_UP extends UserProfileKeys | null
+>(option: RoomOption<O, RM, RM_U, RM_U_UP>) {
+  const org = option.organization
+    ? { organization: pick(Organization, option.organization.fields as any) }
+    : {}
+  const members = option.members
+    ? {
+        members: buildRoomMembersQuery(
+          option.members.args,
+          option.members.fields as any,
+          option.members.with || {}
+        )
+      }
+    : {}
+  return {...org, ...members }
+}
+
+export function buildRoomQuery
+  <R extends RoomKeys,
+   O extends OrganizationKeys | null,
+   RM extends RoomMemberKeys | null,
+   RM_U extends UserKeys | null,
+   RM_U_UP extends UserProfileKeys | null  
+  >(
+    fields: R[],
+    option: RoomOption<O, RM, RM_U, RM_U_UP>
+  ): RoomResult<R, O, RM, RM_U, RM_U_UP> {
+  const pickedFields: any = pick(Room, fields)
+  const resolvedOption = resolveOption(option)
+  return { ...pickedFields, ...resolvedOption }
+}
+
 export function buildRoomsQuery
   <R extends RoomKeys,
    O extends OrganizationKeys | null,
@@ -71,15 +107,6 @@ export function buildRoomsQuery
     option: RoomOption<O, RM, RM_U, RM_U_UP>
   ): RoomsResult<R, O, RM, RM_U, RM_U_UP> {
   const pickedFields: any = pick(Room, fields)
-  if (option.organization) {
-    pickedFields['organization'] = pick(Organization, option.organization.fields as any)
-  }
-  if (option.members) {
-    pickedFields['members'] = buildRoomMembersQuery(
-      option.members.args,
-      option.members.fields as any,
-      option.members.with || {}
-    )
-  }
-  return buildRooms(args, pickedFields)
+  const resolvedOption = resolveOption(option)
+  return buildRooms(args, { ...pickedFields, ...resolvedOption })
 }
