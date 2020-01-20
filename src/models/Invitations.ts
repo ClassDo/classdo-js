@@ -1,8 +1,8 @@
-import { types } from 'typed-graphqlify'
+import { params, types } from 'typed-graphqlify'
 import { RoomKeys, RoomOption, RoomResult, buildRoomQuery } from './Rooms'
 import { OrganizationKeys, OrganizationType, Organization } from './Organizations'
 import { pick } from '../Utils'
-import { ContactType, InvitationStatus } from '../generated/graphql'
+import { ContactType, InvitationStatus, MutationSendInvitationArgs } from '../generated/graphql'
 import { RoomMemberKeys } from './RoomMembers'
 import { UserKeys } from './Users'
 import { UserProfileKeys } from './UserProfiles'
@@ -30,9 +30,24 @@ export type InvitationResult<
   ([R] extends [RoomKeys] ? { room: RoomResult<R, R_O, R_RM, R_RM_U, R_RM_U_UP> } : {}) &
   ([O] extends [OrganizationKeys] ? { profile: Pick<OrganizationType, O> } : {})
 
-export type InvitationOption<R, O, RM, RM_U, RM_U_UP> = {
-  room?: { fields: R[], with: RoomOption<O, RM, RM_U, RM_U_UP> },
+export type InvitationOption<R, R_O, RM, RM_U, RM_U_UP, O> = {
+  room?: { fields: R[], with: RoomOption<R_O, RM, RM_U, RM_U_UP> },
   organization?: { fields: O[] }
+}
+
+function resolveOption<
+  R extends RoomKeys | null,
+  R_O extends OrganizationKeys | null,
+  R_RM extends RoomMemberKeys | null,
+  R_RM_U extends UserKeys | null,
+  R_RM_U_UP extends UserProfileKeys | null,
+  O extends OrganizationKeys | null
+>(option: InvitationOption<R, R_O, R_RM, R_RM_U, R_RM_U_UP, O>) {
+  const org = option.organization ?
+    { organization: pick(Organization, option.organization.fields as any) } : {}
+  const room = option.room ?
+    { room: buildRoomQuery(option.room.fields as any, option.room.with) } : {}
+  return { ...org, ...room }
 }
 
 export function buildInvitationQuery<
@@ -45,14 +60,29 @@ export function buildInvitationQuery<
   O extends OrganizationKeys | null
 >(
   fields: I[],
-  option: InvitationOption<R, R_O, R_RM, R_RM_U, R_RM_U_UP>
+  option: InvitationOption<R, R_O, R_RM, R_RM_U, R_RM_U_UP, O>
 ): InvitationResult<I, R, R_O, R_RM, R_RM_U, R_RM_U_UP, O> {
   const pickedField: any = pick(Invitation, fields)
-  if (option.organization) {
-    pickedField['organization'] = pick(Organization, option.organization.fields as any)
+  const resolvedOption = resolveOption(option)
+  return { ...pickedField, ...resolvedOption }
+}
+
+export function buildSendInvitationMutation<
+  I extends InvitationKeys,
+  R extends RoomKeys | null,
+  R_O extends OrganizationKeys | null,
+  R_RM extends RoomMemberKeys | null,
+  R_RM_U extends UserKeys | null,
+  R_RM_U_UP extends UserProfileKeys | null,
+  O extends OrganizationKeys | null
+>(
+  args: MutationSendInvitationArgs,
+  fields: I[],
+  option?: InvitationOption<R, R_O, R_RM, R_RM_U, R_RM_U_UP, O>
+): { sendInvitation: InvitationResult<I, R, R_O, R_RM, R_RM_U, R_RM_U_UP, O> } {
+  const pickedFields: any = pick(Invitation, fields)
+  const resolvedOption = option ? resolveOption(option) : {}
+  return {
+     sendInvitation: params(args, { ...pickedFields, ...resolvedOption })
   }
-  if (option.room) {
-    pickedField['room'] = buildRoomQuery(option.room.fields as any, option.room.with)
-  }
-  return pickedField
 }

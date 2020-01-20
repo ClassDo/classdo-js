@@ -129,7 +129,7 @@ export function buildCreateRoomMutation
   }
 }
 
-export function buildDeleteRoomMutatoin
+export function buildDeleteRoomMutation
   <R extends RoomKeys>(
     args: MutationDeleteRoomArgs,
     fields: R[]
