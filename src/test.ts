@@ -2,7 +2,8 @@ import { Client } from './Client'
 // import { buildViewerQuery } from './models/Viewer'
 // import { buildCreateRoomMutation } from './models/Rooms'
 // import { buildDeleteRoomMutatoin } from './models/Rooms'
-import { buildAddRoomMembersMutation } from './models/RoomMembers'
+// import { buildAddRoomMembersMutation } from './models/RoomMembers'
+import { buildDeleteRoomMemberMutation } from './models/RoomMembers'
 // import { query } from 'typed-graphqlify'
 import { mutation } from 'typed-graphqlify'
 import gql from 'graphql-tag'
@@ -85,13 +86,13 @@ const client = new Client({ apiKey: 'u6SlsOP2Va2iaW5NjBm1I9c1XeLhhJiW36euYc2h' }
 //   console.log(v.data)
 // })
 // 
-const addRoomMemberSrc = buildAddRoomMembersMutation(
-  { data: { roomId: '"ck56jgshb02hg0726ox49by9v"', userIds: '["ck5m6lgp4118n0726h5pmnbpk"]' as any } },
+const deleteRoomMemberSrc = buildDeleteRoomMemberMutation(
+  { id: '"ck5m6lvym11ac0726uzamur2a"' },
   ['id']
 )
 
-console.log(mutation(addRoomMemberSrc))
-const addRoomMemberResult = client.getClient().mutate({ mutation: gql(mutation(addRoomMemberSrc)) })
-addRoomMemberResult.then(v => {
+console.log(mutation(deleteRoomMemberSrc))
+const deleteRoomMemberResult = client.getClient().mutate({ mutation: gql(mutation(deleteRoomMemberSrc)) })
+deleteRoomMemberResult.then(v => {
   console.log(v.data)
 })
