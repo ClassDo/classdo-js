@@ -1,5 +1,5 @@
 import { params, types } from 'typed-graphqlify'
-import { ViewerRoomsArgs } from '../generated/graphql'
+import { ViewerRoomsArgs, MutationCreateRoomArgs } from '../generated/graphql'
 import { Organization, OrganizationType, OrganizationKeys } from './Organizations'
 import { RoomMemberKeys, buildRoomMembersQuery, RoomMembersResult, RoomMembersOption } from './RoomMembers'
 import { pick } from '../Utils'
@@ -109,4 +109,22 @@ export function buildRoomsQuery
   const pickedFields: any = pick(Room, fields)
   const resolvedOption = resolveOption(option)
   return buildRooms(args, { ...pickedFields, ...resolvedOption })
+}
+
+export function buildCreateRoomMutation
+  <R extends RoomKeys,
+   O extends OrganizationKeys | null,
+   RM extends RoomMemberKeys | null,
+   RM_U extends UserKeys | null,
+   RM_U_UP extends UserProfileKeys | null,
+  >(
+    args: MutationCreateRoomArgs,
+    fields: R[],
+    option?: RoomOption<O, RM, RM_U, RM_U_UP>
+  ): { createRoom: RoomResult<R, O, RM, RM_U, RM_U_UP> } { 
+  const pickedFields: any = pick(Room, fields)
+  const resolvedOption = option ? resolveOption(option) : {}
+  return {
+     createRoom: params(args, { ...pickedFields, ...resolvedOption })
+  }
 }
