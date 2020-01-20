@@ -1,5 +1,5 @@
 import { params, types } from 'typed-graphqlify'
-import { ViewerRoomsArgs, MutationCreateRoomArgs } from '../generated/graphql'
+import { ViewerRoomsArgs, MutationCreateRoomArgs, MutationDeleteRoomArgs } from '../generated/graphql'
 import { Organization, OrganizationType, OrganizationKeys } from './Organizations'
 import { RoomMemberKeys, buildRoomMembersQuery, RoomMembersResult, RoomMembersOption } from './RoomMembers'
 import { pick } from '../Utils'
@@ -18,10 +18,10 @@ export type RoomType = typeof Room
 export type RoomKeys = keyof RoomType
 export type RoomResult<
   R extends RoomKeys | null,
-  O extends OrganizationKeys | null,
-  RM extends RoomMemberKeys | null,
-  RM_U extends UserKeys | null,
-  RM_U_UP extends UserProfileKeys | null,
+  O extends OrganizationKeys | null = null,
+  RM extends RoomMemberKeys | null = null,
+  RM_U extends UserKeys | null = null,
+  RM_U_UP extends UserProfileKeys | null = null,
 > =
   ([R] extends [RoomKeys] ? Pick<RoomType, R> : {}) &
   ([O] extends [OrganizationKeys] ? { organization: Pick<OrganizationType, O> } : {}) &
@@ -121,10 +121,21 @@ export function buildCreateRoomMutation
     args: MutationCreateRoomArgs,
     fields: R[],
     option?: RoomOption<O, RM, RM_U, RM_U_UP>
-  ): { createRoom: RoomResult<R, O, RM, RM_U, RM_U_UP> } { 
+  ): { createRoom: RoomResult<R, O, RM, RM_U, RM_U_UP> } {
   const pickedFields: any = pick(Room, fields)
   const resolvedOption = option ? resolveOption(option) : {}
   return {
      createRoom: params(args, { ...pickedFields, ...resolvedOption })
+  }
+}
+
+export function buildDeleteRoomMutatoin
+  <R extends RoomKeys>(
+    args: MutationDeleteRoomArgs,
+    fields: R[]
+  ): { deleteRoom: RoomResult<R> } {
+  const pickedFields: any = pick(Room, fields)
+  return {
+     deleteRoom: params(args, { ...pickedFields })
   }
 }
