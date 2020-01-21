@@ -2,12 +2,12 @@ import { ApolloClient, ApolloQueryResult } from 'apollo-client'
 import fetch from 'node-fetch'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory'
-import { from } from 'apollo-link'
+import { from, FetchResult } from 'apollo-link'
 import { setContext } from 'apollo-link-context'
 import { onError } from 'apollo-link-error'
 import Log from 'loglevel'
 import gql from 'graphql-tag'
-import { query } from 'typed-graphqlify'
+import { query, mutation } from 'typed-graphqlify'
 
 const url = 'https://api.classdo.localhost:9001/graphql'
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
@@ -64,5 +64,9 @@ export class Client {
 
   query<R>(src: R): Promise<ApolloQueryResult<R>> {
     return this.getClient().query({ query: gql(query(src)) })
+  }
+
+  mutate<R>(src: R): Promise<FetchResult<R>> {
+    return this.getClient().mutate({ mutation: gql(mutation(src)) })
   }
 }

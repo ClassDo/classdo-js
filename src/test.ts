@@ -114,7 +114,7 @@ const sendInvitationSrc = buildSendInvitationMutation(
 )
 
 console.log(mutation(sendInvitationSrc))
-const sendInvitationResult = client.getClient().mutate({ mutation: gql(mutation(sendInvitationSrc)) })
+const sendInvitationResult = client.mutate(sendInvitationSrc)
 sendInvitationResult.then(v => {
   console.log(v.data)
 })
