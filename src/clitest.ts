@@ -2,13 +2,13 @@ import { Client } from './Client'
 // import { buildViewerQuery } from './models/Viewer'
 // import { buildCreateRoomMutation } from './models/Rooms'
 // import { buildDeleteRoomMutatoin } from './models/Rooms'
-// import { buildAddRoomMembersMutation } from './models/RoomMembers'
+import { buildAddRoomMembersMutation } from './models/RoomMembers'
 // import { buildDeleteRoomMemberMutation } from './models/RoomMembers'
-import { buildSendInvitationMutation } from './models/Invitations'
+// import { buildSendInvitationMutation } from './models/Invitations'
 // import { query } from 'typed-graphqlify'
 import { mutation } from 'typed-graphqlify'
 import gql from 'graphql-tag'
-import { Locale, ContactType } from './generated/graphql'
+// import { Locale, ContactType } from './generated/graphql'
 
 
 const client = new Client({ apiKey: 'u6SlsOP2Va2iaW5NjBm1I9c1XeLhhJiW36euYc2h' })
@@ -99,22 +99,33 @@ const client = new Client({ apiKey: 'u6SlsOP2Va2iaW5NjBm1I9c1XeLhhJiW36euYc2h' }
 //   console.log(v.data)
 // })
 
-const sendInvitationSrc = buildSendInvitationMutation(
-  { 
-    data: {
-      roomId: '"ck56jgshb02hg0726ox49by9v"',
-      organizationMemberRoleId: '"ck4l8tsem03np0726qp9ynba9"',
-      locale: Locale.En,
-      contactFullName: '"Masato"',
-      contactType: ContactType.Email,
-      contactInfo: '"joe.tialtngo@gmail.com"'
-    }
-  },
-  ['id'],
+const addRoomMemberSrc = buildAddRoomMembersMutation(
+  { data: { roomId: 'ck56jgshb02hg0726ox49by9v', userIds: ['ck5m6lgp4118n0726h5pmnbpk'] } },
+  ['id']
 )
 
-console.log(mutation(sendInvitationSrc))
-const sendInvitationResult = client.mutate(sendInvitationSrc)
-sendInvitationResult.then(v => {
+console.log(mutation(addRoomMemberSrc))
+const addRoomMemberResult = client.getClient().mutate({ mutation: gql(mutation(addRoomMemberSrc)) })
+addRoomMemberResult.then(v => {
   console.log(v.data)
 })
+
+// const sendInvitationSrc = buildSendInvitationMutation(
+//   { 
+//     data: {
+//       roomId: '"ck56jgshb02hg0726ox49by9v"',
+//       organizationMemberRoleId: '"ck4l8tsem03np0726qp9ynba9"',
+//       locale: Locale.En,
+//       contactFullName: '"Masato"',
+//       contactType: ContactType.Email,
+//       contactInfo: '"joe.tialtngo@gmail.com"'
+//     }
+//   },
+//   ['id'],
+// )
+// 
+// console.log(mutation(sendInvitationSrc))
+// const sendInvitationResult = client.mutate(sendInvitationSrc)
+// sendInvitationResult.then(v => {
+//   console.log(v.datak
+// })

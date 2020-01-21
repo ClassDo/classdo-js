@@ -1,7 +1,7 @@
 import { params, types } from 'typed-graphqlify'
 import { RoomMembersArgs, MutationAddRoomMembersArgs, MutationDeleteRoomMemberArgs } from '../generated/graphql'
 import { Connection } from './Connection'
-import { pick } from '../Utils'
+import { pick, preprocessArgs } from '../Utils'
 import { UserKeys, UserResult, UserOption, buildUserQuery } from './Users'
 import { UserProfileKeys } from './UserProfiles'
 
@@ -80,8 +80,9 @@ export function buildAddRoomMembersMutation<
 ): { addRoomMembers: RoomMemberResult<RM, U, U_UP> } {
   const pickedFields: any = pick(RoomMember, fields)
   const resolvedOption = option ? resolveOption(option) : {}
+  console.log(preprocessArgs(args))
   return {
-     addRoomMembers: params(args as any, { ...pickedFields, ...resolvedOption })
+     addRoomMembers: params(preprocessArgs(args), { ...pickedFields, ...resolvedOption })
   }
 }
 
