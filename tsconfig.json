@@ -13,10 +13,7 @@
     "sourceMap": true,
     "allowJs": true,
     "baseUrl": "./",
-    "lib": ["esnext"],
-    "paths": {
-      "@/*": ["src/*"]
-    }
+    "lib": ["esnext"]
   },
   "include": [
     "src/**/*.ts"

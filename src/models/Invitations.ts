@@ -1,7 +1,7 @@
 import { params, types } from 'typed-graphqlify'
 import { RoomKeys, RoomOption, RoomResult, buildRoomQuery } from './Rooms'
 import { OrganizationKeys, OrganizationType, Organization } from './Organizations'
-import { pick } from '../Utils'
+import { pick, preprocessArgs } from '../Utils'
 import { ContactType, InvitationStatus, MutationSendInvitationArgs } from '../generated/graphql'
 import { RoomMemberKeys } from './RoomMembers'
 import { UserKeys } from './Users'
@@ -60,10 +60,10 @@ export function buildInvitationQuery<
   O extends OrganizationKeys | null
 >(
   fields: I[],
-  option: InvitationOption<R, R_O, R_RM, R_RM_U, R_RM_U_UP, O>
+  option?: InvitationOption<R, R_O, R_RM, R_RM_U, R_RM_U_UP, O>
 ): InvitationResult<I, R, R_O, R_RM, R_RM_U, R_RM_U_UP, O> {
   const pickedField: any = pick(Invitation, fields)
-  const resolvedOption = resolveOption(option)
+  const resolvedOption = option ? resolveOption(option) : {}
   return { ...pickedField, ...resolvedOption }
 }
 
@@ -83,6 +83,6 @@ export function buildSendInvitationMutation<
   const pickedFields: any = pick(Invitation, fields)
   const resolvedOption = option ? resolveOption(option) : {}
   return {
-     sendInvitation: params(args, { ...pickedFields, ...resolvedOption })
+     sendInvitation: params(preprocessArgs(args), { ...pickedFields, ...resolvedOption })
   }
 }

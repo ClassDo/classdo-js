@@ -46,7 +46,7 @@ export const buildRoomMembers = <T> (args: RoomMembersArgs | void, roomMember: T
     },
     edges: [buildRoomMemberEdge(roomMember)]
   }
-  return args ? params(args as any, roomMembers) : roomMembers
+  return args ? params(preprocessArgs(args), roomMembers) : roomMembers
 }
 
 function resolveOption<
@@ -93,6 +93,6 @@ export function buildDeleteRoomMemberMutation<
 ): { deleteRoomMember: RoomMemberResult<RM> } {
   const pickedFields: any = pick(RoomMember, fields)
   return {
-     deleteRoomMember: params(args, { ...pickedFields })
+     deleteRoomMember: params(preprocessArgs(args), { ...pickedFields })
   }
 }

@@ -1,7 +1,7 @@
 import { params, types } from 'typed-graphqlify'
 import { OrganizationRolesArgs } from '../generated/graphql'
 import { Connection } from './Connection'
-import { pick } from '../Utils'
+import { pick, preprocessArgs } from '../Utils'
 
 export const OrganizationMemberRole = {
   id: types.string,
@@ -36,7 +36,7 @@ export const buildOrganizationMemberRoles = <T> (args: OrganizationRolesArgs | v
     },
     edges: [buildOrganizationMemberRoleEdge(role)]
   }
-  return args ? params(args as any, roomMembers) : roomMembers
+  return args ? params(preprocessArgs(args), roomMembers) : roomMembers
 }
 
 export function buildOrganizationMemberRoleQuery<

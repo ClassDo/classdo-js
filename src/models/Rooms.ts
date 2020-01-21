@@ -2,7 +2,7 @@ import { params, types } from 'typed-graphqlify'
 import { ViewerRoomsArgs, MutationCreateRoomArgs, MutationDeleteRoomArgs } from '../generated/graphql'
 import { Organization, OrganizationType, OrganizationKeys } from './Organizations'
 import { RoomMemberKeys, buildRoomMembersQuery, RoomMembersResult, RoomMembersOption } from './RoomMembers'
-import { pick } from '../Utils'
+import { pick, preprocessArgs } from '../Utils'
 import { Connection } from './Connection'
 import { RoomMembersArgs } from '../generated/graphql'
 import { UserKeys } from './Users'
@@ -56,7 +56,7 @@ const buildRooms = <T> (args: ViewerRoomsArgs | void, room: T) => {
     },
     edges: [buildRoomEdge(room)]
   }
-  return args ? params(args as any, rooms) : rooms
+  return args ? params(preprocessArgs(args), rooms) : rooms
 }
 
 function resolveOption<
@@ -125,7 +125,7 @@ export function buildCreateRoomMutation
   const pickedFields: any = pick(Room, fields)
   const resolvedOption = option ? resolveOption(option) : {}
   return {
-     createRoom: params(args, { ...pickedFields, ...resolvedOption })
+     createRoom: params(preprocessArgs(args), { ...pickedFields, ...resolvedOption })
   }
 }
 
@@ -136,6 +136,6 @@ export function buildDeleteRoomMutation
   ): { deleteRoom: RoomResult<R> } {
   const pickedFields: any = pick(Room, fields)
   return {
-     deleteRoom: params(args, { ...pickedFields })
+     deleteRoom: params(preprocessArgs(args), { ...pickedFields })
   }
 }

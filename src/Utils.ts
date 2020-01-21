@@ -1,3 +1,5 @@
+import { Params } from 'typed-graphqlify/dist/render'
+
 export function pick <M extends Object, F extends keyof M> (model: M, fields: F[] | null) {
   if (!fields) {
     return {}
@@ -8,7 +10,7 @@ export function pick <M extends Object, F extends keyof M> (model: M, fields: F[
   }, {} as Pick<M, F>)
 }
 
-export function preprocessArgs (args: Object): any {
+export function preprocessArgs (args: { [key: string]: any }): Params {
   function process (value: any): any {
     switch(typeof value) {
       case 'boolean':
@@ -23,6 +25,11 @@ export function preprocessArgs (args: Object): any {
         }
         if (value !== null) {
           return Object.keys(value).reduce((p, key) => {
+             if (['contactType', 'locale'].includes(key)) {
+               // for enum type don't do anything.
+               p[key] = value[key]
+               return p
+             }
              p[key] = process(value[key])
              return p
           }, {} as {[key: string]: any})
