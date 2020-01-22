@@ -30,12 +30,12 @@ export type RoomMembersOption<U, U_UP> = {
   user?: { fields: U[], with?: UserOption<U_UP> }
 }
 
-export const buildRoomMemberEdge = <T> (roomMember: T) => ({
+const buildRoomMemberEdge = <T> (roomMember: T) => ({
   node: roomMember,
   cursor: types.string
 })
 
-export const buildRoomMembers = <T> (args: RoomMembersArgs | void, roomMember: T) => {
+const buildRoomMembers = <T> (args: RoomMembersArgs | void | null, roomMember: T) => {
   const roomMembers = {
     totalCount: types.number,
     pageInfo: {
@@ -62,10 +62,12 @@ export function buildRoomMembersQuery<
   U extends UserKeys | null,
   U_UP extends UserProfileKeys | null,
 >(
-  args: RoomMembersArgs | void, fields: RM[], option: RoomMembersOption<U, U_UP> 
+  fields: RM[],
+  args?: RoomMembersArgs | void | null,
+  option?: RoomMembersOption<U, U_UP>
 ): RoomMembersResult<RM, U, U_UP> {
   const pickedField: any = pick(RoomMember, fields)
-  if (option.user) {
+  if (option && option.user) {
     pickedField['user'] = buildUserQuery(option.user.fields as any, option.user.with || {})
   }
   return buildRoomMembers(args, pickedField as any)
@@ -76,7 +78,9 @@ export function buildAddRoomMembersMutation<
   U extends UserKeys | null,
   U_UP extends UserProfileKeys | null,
 > (
-  args: MutationAddRoomMembersArgs, fields: RM[], option?: RoomMembersOption<U, U_UP>
+  fields: RM[],
+  args: MutationAddRoomMembersArgs,
+  option?: RoomMembersOption<U, U_UP>
 ): { addRoomMembers: RoomMemberResult<RM, U, U_UP> } {
   const pickedFields: any = pick(RoomMember, fields)
   const resolvedOption = option ? resolveOption(option) : {}
@@ -89,7 +93,8 @@ export function buildAddRoomMembersMutation<
 export function buildDeleteRoomMemberMutation<
   RM extends RoomMemberKeys
 > (
-  args: MutationDeleteRoomMemberArgs, fields: RM[]
+  fields: RM[],
+  args: MutationDeleteRoomMemberArgs
 ): { deleteRoomMember: RoomMemberResult<RM> } {
   const pickedFields: any = pick(RoomMember, fields)
   return {

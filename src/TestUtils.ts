@@ -1,3 +1,3 @@
-export function compareGraphqlQuery(expected: string, actual: string) {
-  expect(expected.replace(/\s/gi, '')).toEqual(actual.replace(/\s/gi, ''))
+export function compareGraphqlQuery(actual: string, expected: string) {
+  expect(actual.replace(/\s/gi, '')).toEqual(expected.replace(/\s/gi, ''))
 }

@@ -71,8 +71,8 @@ function resolveOption<
   const members = option.members
     ? {
         members: buildRoomMembersQuery(
-          option.members.args,
           option.members.fields as any,
+          option.members.args,
           option.members.with || {}
         )
       }
