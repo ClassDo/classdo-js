@@ -84,7 +84,6 @@ export function buildAddRoomMembersMutation<
 ): { addRoomMembers: RoomMemberResult<RM, U, U_UP> } {
   const pickedFields: any = pick(RoomMember, fields)
   const resolvedOption = option ? resolveOption(option) : {}
-  console.log(preprocessArgs(args))
   return {
      addRoomMembers: params(preprocessArgs(args), { ...pickedFields, ...resolvedOption })
   }

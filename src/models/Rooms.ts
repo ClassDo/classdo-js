@@ -45,7 +45,7 @@ const buildRoomEdge = <T> (room: T) => ({
   cursor: types.string
 })
 
-const buildRooms = <T> (args: ViewerRoomsArgs | void, room: T) => {
+const buildRooms = <T> (args: ViewerRoomsArgs | void | null, room: T) => {
   const rooms = {
     totalCount: types.number,
     pageInfo: {
@@ -88,10 +88,10 @@ export function buildRoomQuery
    RM_U_UP extends UserProfileKeys | null  
   >(
     fields: R[],
-    option: RoomOption<O, RM, RM_U, RM_U_UP>
+    option?: RoomOption<O, RM, RM_U, RM_U_UP>
   ): RoomResult<R, O, RM, RM_U, RM_U_UP> {
   const pickedFields: any = pick(Room, fields)
-  const resolvedOption = resolveOption(option)
+  const resolvedOption = option ? resolveOption(option) : {}
   return { ...pickedFields, ...resolvedOption }
 }
 
@@ -102,12 +102,12 @@ export function buildRoomsQuery
    RM_U extends UserKeys | null,
    RM_U_UP extends UserProfileKeys | null,
   >(
-    args: ViewerRoomsArgs | void,
     fields: R[],
-    option: RoomOption<O, RM, RM_U, RM_U_UP>
+    args?: ViewerRoomsArgs | void | null,
+    option?: RoomOption<O, RM, RM_U, RM_U_UP>
   ): RoomsResult<R, O, RM, RM_U, RM_U_UP> {
   const pickedFields: any = pick(Room, fields)
-  const resolvedOption = resolveOption(option)
+  const resolvedOption = option ? resolveOption(option) : {}
   return buildRooms(args, { ...pickedFields, ...resolvedOption })
 }
 
@@ -118,8 +118,8 @@ export function buildCreateRoomMutation
    RM_U extends UserKeys | null,
    RM_U_UP extends UserProfileKeys | null,
   >(
-    args: MutationCreateRoomArgs,
     fields: R[],
+    args: MutationCreateRoomArgs,
     option?: RoomOption<O, RM, RM_U, RM_U_UP>
   ): { createRoom: RoomResult<R, O, RM, RM_U, RM_U_UP> } {
   const pickedFields: any = pick(Room, fields)
@@ -131,8 +131,8 @@ export function buildCreateRoomMutation
 
 export function buildDeleteRoomMutation
   <R extends RoomKeys>(
+    fields: R[],
     args: MutationDeleteRoomArgs,
-    fields: R[]
   ): { deleteRoom: RoomResult<R> } {
   const pickedFields: any = pick(Room, fields)
   return {
