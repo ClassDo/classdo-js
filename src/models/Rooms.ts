@@ -1,6 +1,6 @@
 import { params, types } from 'typed-graphqlify'
 import { ViewerRoomsArgs, MutationCreateRoomArgs, MutationDeleteRoomArgs } from '../generated/graphql'
-import { Organization, OrganizationType, OrganizationKeys } from './Organizations'
+import { OrganizationType, OrganizationKeys, buildOrganizationQuery } from './Organizations'
 import { RoomMemberKeys, buildRoomMembersQuery, RoomMembersResult, RoomMembersOption } from './RoomMembers'
 import { pick, preprocessArgs } from '../Utils'
 import { Connection } from './Connection'
@@ -66,7 +66,7 @@ function resolveOption<
   RM_U_UP extends UserProfileKeys | null
 >(option: RoomOption<O, RM, RM_U, RM_U_UP>) {
   const org = option.organization
-    ? { organization: pick(Organization, option.organization.fields as any) }
+    ? { organization: buildOrganizationQuery(option.organization.fields as any) }
     : {}
   const members = option.members
     ? {
