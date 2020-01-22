@@ -1,8 +1,8 @@
 import { Params } from 'typed-graphqlify/dist/render'
 
-export function pick <M extends Object, F extends keyof M> (model: M, fields: F[] | null) {
+export function pick <M extends {}, F extends keyof M> (model: M, fields: F[] | null): Pick<M, F> {
   if (!fields) {
-    return {}
+    return {} as Pick<M, F>
   }
   return fields.reduce((p, c) => {
     p[c] = model[c]

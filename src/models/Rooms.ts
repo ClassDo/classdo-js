@@ -90,8 +90,8 @@ export function buildRoomQuery
     fields: R[],
     option?: RoomOption<O, RM, RM_U, RM_U_UP>
   ): RoomResult<R, O, RM, RM_U, RM_U_UP> {
-  const pickedFields: any = pick(Room, fields)
-  const resolvedOption = option ? resolveOption(option) : {}
+  const pickedFields = pick(Room, fields)
+  const resolvedOption = option ? resolveOption(option) : {} as any
   return { ...pickedFields, ...resolvedOption }
 }
 

@@ -1,4 +1,5 @@
 import { types } from 'typed-graphqlify'
+import { pick } from '../Utils'
 
 export const UserProfile = {
   id: types.string,
@@ -9,5 +10,12 @@ export const UserProfile = {
 
 export type UserProfileType = typeof UserProfile 
 export type UserProfileKeys = keyof UserProfileType
-export type UserProfileResult<UP extends UserProfileKeys | null> =
-  ([UP] extends [UserProfileKeys] ? Pick<UserProfileType, UP> : {})
+export type UserProfileResult<UP extends UserProfileKeys> =
+  Pick<UserProfileType, UP>
+
+export function buildUserProfileQuery<
+  UP extends UserProfileKeys
+>(fields: UP[]): UserProfileResult<UP> {
+  const pickedField = pick(UserProfile, fields)
+  return pickedField
+}

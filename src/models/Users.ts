@@ -1,5 +1,5 @@
 import { types } from 'typed-graphqlify'
-import { UserProfile, UserProfileKeys, UserProfileType } from './UserProfiles'
+import { UserProfileKeys, UserProfileType, buildUserProfileQuery } from './UserProfiles'
 import { pick } from '../Utils'
 
 export const User = {
@@ -25,8 +25,8 @@ export function buildUserQuery<
   UP extends UserProfileKeys | null
 >(fields: U[], option: UserOption<UP>): UserResult<U, UP> {
   const pickedField: any = pick(User, fields)
-  if (option.profile) {
-    pickedField['profile'] = pick(UserProfile, option.profile.fields as any)
-  }
-  return pickedField
+  const profile = option.profile ? {
+    profile: buildUserProfileQuery(option.profile.fields as any)
+  } : {}
+  return { ...pickedField, ...profile }
 }

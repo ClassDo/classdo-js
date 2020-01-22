@@ -9,10 +9,13 @@ export const Organization = {
 
 export type OrganizationType = typeof Organization
 export type OrganizationKeys = keyof OrganizationType
+export type OrganizationResult< O extends OrganizationKeys> =
+  Pick<OrganizationType, O>
+
 
 export function buildOrganizationQuery<
   O extends OrganizationKeys
->(fields: O[]) {
+>(fields: O[]): OrganizationResult<O> {
   const pickedField = pick(Organization, fields)
   return pickedField
 }
