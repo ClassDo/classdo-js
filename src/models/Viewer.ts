@@ -52,35 +52,33 @@ export function buildViewerQuery <
   OM_U_UP extends UserProfileKeys | null,
   OM_OMR extends OrganizationMemberRoleKeys | null,
   OMR extends OrganizationMemberRoleKeys | null,
-> (fields: V[], option: ViewerOption<R, R_O, R_M, R_M_U, R_M_U_UP, OM, OM_U, OM_U_UP, OM_OMR, OMR>):
-  { viewer:
-    ViewerResult<
-      V,
-      RoomsResult<R, R_O, R_M, R_M_U, R_M_U_UP>,
-      OrganizationMembersResult<OM, OM_U, OM_U_UP, OM_OMR>,
-      OrganizationMemberRolesResult<OMR>
-    >
-  } {
+> (fields: V[], option?: ViewerOption<R, R_O, R_M, R_M_U, R_M_U_UP, OM, OM_U, OM_U_UP, OM_OMR, OMR>):
+  ViewerResult<
+    V,
+    RoomsResult<R, R_O, R_M, R_M_U, R_M_U_UP>,
+    OrganizationMembersResult<OM, OM_U, OM_U_UP, OM_OMR>,
+    OrganizationMemberRolesResult<OMR>
+  > {
   const pickedFields: any = pick(Viewer, fields || [])
-  if (option.rooms) {
+  if (option && option.rooms) {
     pickedFields['rooms'] = buildRoomsQuery(
-      option.rooms.args,
       option.rooms.fields as any,
+      option.rooms.args,
       option.rooms.with || {}
     )
-    if (option.members) {
-      pickedFields['members'] = buildOrganizationMembersQuery(
-        option.members.fields as any,
-        option.members.args,
-        option.members.with || {}
-      )
-    }
-    if (option.roles) {
-      pickedFields['roles'] = buildOrganizationMemberRolesQuery(
-        option.roles.fields as any,
-        option.roles.args
-      )
-    }
   }
-  return { viewer: pickedFields }
+  if (option && option.members) {
+    pickedFields['members'] = buildOrganizationMembersQuery(
+      option.members.fields as any,
+      option.members.args,
+      option.members.with || {}
+    )
+  }
+  if (option && option.roles) {
+    pickedFields['roles'] = buildOrganizationMemberRolesQuery(
+      option.roles.fields as any,
+      option.roles.args
+    )
+  }
+  return pickedFields
 }
