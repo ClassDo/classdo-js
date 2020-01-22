@@ -1,13 +1,13 @@
 import { types } from 'typed-graphqlify'
-import { RoomsResult, RoomKeys, RoomOption, buildRoomsQuery } from './Rooms'
+import { RoomKeys, RoomOption, buildRoomsQuery, RoomsResult } from './Rooms'
 import { RoomMemberKeys } from './RoomMembers'
 import { OrganizationKeys } from './Organizations'
 import { pick } from '../Utils'
 import { ViewerRoomsArgs, OrganizationMembersArgs, OrganizationRolesArgs } from '../generated/graphql'
 import { UserKeys } from './Users'
 import { UserProfileKeys } from './UserProfiles'
-import { OrganizationMemberKeys, OrganizationMembersResult, OrganizationMembersOption, buildOrganizationMembersQuery } from './OrganizationMembers'
-import { OrganizationMemberRoleKeys, OrganizationMemberRolesResult, buildOrganizationMemberRolesQuery } from './OrganizationMemberRoles'
+import { OrganizationMemberKeys, OrganizationMembersOption, buildOrganizationMembersQuery, OrganizationMembersResult } from './OrganizationMembers'
+import { OrganizationMemberRoleKeys, buildOrganizationMemberRolesQuery, OrganizationMemberRolesResult } from './OrganizationMemberRoles'
 
 const Viewer = {
   id: types.string,
@@ -34,11 +34,23 @@ export type ViewerOption<R, R_O, R_M, R_M_U, R_M_U_UP, OM, OM_U, OM_U_UP, OM_OMR
   }
 }
 
-export type ViewerResult<V extends ViewerKeys, R, OM, OMR> =
+export type ViewerResult<
+  V extends ViewerKeys,
+  R extends RoomKeys | null,
+  R_O extends OrganizationKeys | null,
+  R_M extends RoomMemberKeys | null,
+  R_M_U extends UserKeys | null,
+  R_M_U_UP extends UserProfileKeys | null,
+  OM extends OrganizationMemberKeys | null,
+  OM_U extends UserKeys | null,
+  OM_U_UP extends UserProfileKeys | null,
+  OM_OMR extends OrganizationMemberRoleKeys | null,
+  OMR extends OrganizationMemberRoleKeys | null
+> =
   Pick<ViewerType, V> &
-  (R extends {} ? { rooms: R } : {}) &
-  (OM extends {} ? { members: OM } : {}) &
-  (OMR extends {} ? { roles: OMR } : {})
+  ([R] extends [RoomKeys] ? { rooms: RoomsResult<R, R_O, R_M, R_M_U, R_M_U_UP> } : {}) &
+  ([OM] extends [OrganizationMemberKeys] ? { members: OrganizationMembersResult<OM, OM_U, OM_U_UP, OM_OMR> } : {}) &
+  ([OMR] extends [OrganizationMemberRoleKeys] ? { roles: OrganizationMemberRolesResult<OMR> } : {})
 
 export function buildViewerQuery <
   V extends ViewerKeys,
@@ -55,9 +67,9 @@ export function buildViewerQuery <
 > (fields: V[], option?: ViewerOption<R, R_O, R_M, R_M_U, R_M_U_UP, OM, OM_U, OM_U_UP, OM_OMR, OMR>):
   ViewerResult<
     V,
-    RoomsResult<R, R_O, R_M, R_M_U, R_M_U_UP>,
-    OrganizationMembersResult<OM, OM_U, OM_U_UP, OM_OMR>,
-    OrganizationMemberRolesResult<OMR>
+    R, R_O, R_M, R_M_U, R_M_U_UP,
+    OM, OM_U, OM_U_UP, OM_OMR,
+    OMR
   > {
   const pickedFields: any = pick(Viewer, fields || [])
   if (option && option.rooms) {
