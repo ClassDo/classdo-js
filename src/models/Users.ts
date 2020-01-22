@@ -23,9 +23,9 @@ export type UserOption<UP> = {
 export function buildUserQuery<
   U extends UserKeys,
   UP extends UserProfileKeys | null
->(fields: U[], option: UserOption<UP>): UserResult<U, UP> {
+>(fields: U[], option?: UserOption<UP>): UserResult<U, UP> {
   const pickedField: any = pick(User, fields)
-  const profile = option.profile ? {
+  const profile = option && option.profile ? {
     profile: buildUserProfileQuery(option.profile.fields as any)
   } : {}
   return { ...pickedField, ...profile }
