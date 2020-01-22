@@ -77,8 +77,8 @@ export function buildViewerQuery <
     }
     if (option.roles) {
       pickedFields['roles'] = buildOrganizationMemberRolesQuery(
-        option.roles.args,
-        option.roles.fields as any
+        option.roles.fields as any,
+        option.roles.args
       )
     }
   }
