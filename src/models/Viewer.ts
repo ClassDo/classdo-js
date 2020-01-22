@@ -70,8 +70,8 @@ export function buildViewerQuery <
     )
     if (option.members) {
       pickedFields['members'] = buildOrganizationMembersQuery(
-        option.members.args,
         option.members.fields as any,
+        option.members.args,
         option.members.with || {}
       )
     }

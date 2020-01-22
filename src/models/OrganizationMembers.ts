@@ -35,12 +35,14 @@ export type OrganizationMembersOption<U, U_UP, OMR> = {
   role?: { fields: OMR[] }
 }
 
-export const buildOrganizationMemberEdge = <T> (organizationMember: T) => ({
+const buildOrganizationMemberEdge = <T> (organizationMember: T) => ({
   node: organizationMember,
   cursor: types.string
 })
 
-export const buildOrganizationMembers = <T> (args: OrganizationMembersArgs | void, organizationMember: T) => {
+const buildOrganizationMembers = <T> (
+  args: OrganizationMembersArgs | void | null,
+  organizationMember: T) => {
   const roomMembers = {
     totalCount: types.number,
     pageInfo: {
@@ -60,13 +62,15 @@ export function buildOrganizationMembersQuery<
   U_UP extends UserProfileKeys | null,
   OMR extends OrganizationMemberRoleKeys | null
 >(
-  args: OrganizationMembersArgs | void, fields: OM[], option: OrganizationMembersOption<U, U_UP, OMR> 
+  fields: OM[],
+  args?: OrganizationMembersArgs | void | null,
+  option?: OrganizationMembersOption<U, U_UP, OMR>
 ): OrganizationMembersResult<OM, U, U_UP, OMR> {
   const pickedField: any = pick(OrganizationMember, fields)
-  if (option.user) {
+  if (option && option.user) {
     pickedField['user'] = buildUserQuery(option.user.fields as any, option.user.with || {})
   }
-  if (option.role) {
+  if (option && option.role) {
     pickedField['role'] = buildOrganizationMemberRoleQuery(option.role.fields as any)
   }
   return buildOrganizationMembers(args, pickedField as any)
