@@ -25,7 +25,7 @@ const buildOrganizationMemberRoleEdge = <T> (role: T) => ({
   cursor: types.string
 })
 
-const buildOrganizationMemberRoles = <T> (args: OrganizationRolesArgs | void, role: T) => {
+const buildOrganizationMemberRoles = <T> (args: OrganizationRolesArgs | undefined | null, role: T) => {
   const roomMembers = {
     totalCount: types.number,
     pageInfo: {
@@ -51,7 +51,7 @@ export function buildOrganizationMemberRoleQuery<
 export function buildOrganizationMemberRolesQuery<
   OMR extends OrganizationMemberRoleKeys
 >(
-  fields: OMR[], args?: OrganizationRolesArgs
+  fields: OMR[], args?: OrganizationRolesArgs | null | undefined
 ): OrganizationMemberRolesResult<OMR> {
   const pickedField: any = pick(OrganizationMemberRole, fields)
   return buildOrganizationMemberRoles(args, pickedField as any)

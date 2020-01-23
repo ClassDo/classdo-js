@@ -17,18 +17,18 @@ export const Room = {
 export type RoomType = typeof Room
 export type RoomKeys = keyof RoomType
 export type RoomResult<
-  R extends RoomKeys | null,
+  R extends RoomKeys,
   O extends OrganizationKeys | null = null,
   RM extends RoomMemberKeys | null = null,
   RM_U extends UserKeys | null = null,
   RM_U_UP extends UserProfileKeys | null = null,
 > =
-  ([R] extends [RoomKeys] ? Pick<RoomType, R> : {}) &
+  Pick<RoomType, R> &
   ([O] extends [OrganizationKeys] ? { organization: Pick<OrganizationType, O> } : {}) &
   ([RM] extends [RoomMemberKeys] ? { members: RoomMembersResult<RM, RM_U, RM_U_UP> } : {})
 
 export type RoomsResult<
-  R extends RoomKeys | null,
+  R extends RoomKeys,
   O extends OrganizationKeys | null,
   RM extends RoomMemberKeys | null,
   RM_U extends UserKeys | null,
@@ -45,7 +45,7 @@ const buildRoomEdge = <T> (room: T) => ({
   cursor: types.string
 })
 
-const buildRooms = <T> (args: ViewerRoomsArgs | void | null, room: T) => {
+const buildRooms = <T> (args: ViewerRoomsArgs | undefined | null, room: T) => {
   const rooms = {
     totalCount: types.number,
     pageInfo: {
@@ -103,7 +103,7 @@ export function buildRoomsQuery
    RM_U_UP extends UserProfileKeys | null,
   >(
     fields: R[],
-    args?: ViewerRoomsArgs | void | null,
+    args?: ViewerRoomsArgs | undefined | null,
     option?: RoomOption<O, RM, RM_U, RM_U_UP>
   ): RoomsResult<R, O, RM, RM_U, RM_U_UP> {
   const pickedFields: any = pick(Room, fields)

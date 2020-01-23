@@ -41,7 +41,7 @@ const buildOrganizationMemberEdge = <T> (organizationMember: T) => ({
 })
 
 const buildOrganizationMembers = <T> (
-  args: OrganizationMembersArgs | void | null,
+  args: OrganizationMembersArgs | undefined | null,
   organizationMember: T) => {
   const roomMembers = {
     totalCount: types.number,
@@ -63,7 +63,7 @@ export function buildOrganizationMembersQuery<
   OMR extends OrganizationMemberRoleKeys | null
 >(
   fields: OM[],
-  args?: OrganizationMembersArgs | void | null,
+  args?: OrganizationMembersArgs | undefined | null,
   option?: OrganizationMembersOption<U, U_UP, OMR>
 ): OrganizationMembersResult<OM, U, U_UP, OMR> {
   const pickedField: any = pick(OrganizationMember, fields)

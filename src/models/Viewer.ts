@@ -20,17 +20,17 @@ export type ViewerKeys = keyof typeof Viewer
 export type ViewerOption<R, R_O, R_M, R_M_U, R_M_U_UP, OM, OM_U, OM_U_UP, OM_OMR, OMR> = {
   rooms?: {
     fields: R[],
-    args?: ViewerRoomsArgs,
+    args?: ViewerRoomsArgs | undefined | null,
     with?: RoomOption<R_O, R_M, R_M_U, R_M_U_UP>
   },
   members?: {
     fields: OM[],
-    args?: OrganizationMembersArgs,
+    args?: OrganizationMembersArgs | undefined | null,
     with?: OrganizationMembersOption<OM_U, OM_U_UP, OM_OMR>
   },
   roles?: {
     fields: OMR[],
-    args?: OrganizationRolesArgs
+    args?: OrganizationRolesArgs | undefined | null
   }
 }
 

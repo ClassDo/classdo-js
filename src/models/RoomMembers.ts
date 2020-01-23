@@ -35,7 +35,7 @@ const buildRoomMemberEdge = <T> (roomMember: T) => ({
   cursor: types.string
 })
 
-const buildRoomMembers = <T> (args: RoomMembersArgs | void | null, roomMember: T) => {
+const buildRoomMembers = <T> (args: RoomMembersArgs | undefined | null, roomMember: T) => {
   const roomMembers = {
     totalCount: types.number,
     pageInfo: {
@@ -63,7 +63,7 @@ export function buildRoomMembersQuery<
   U_UP extends UserProfileKeys | null,
 >(
   fields: RM[],
-  args?: RoomMembersArgs | void | null,
+  args?: RoomMembersArgs | undefined | null,
   option?: RoomMembersOption<U, U_UP>
 ): RoomMembersResult<RM, U, U_UP> {
   const pickedField: any = pick(RoomMember, fields)
