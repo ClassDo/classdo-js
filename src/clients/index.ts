@@ -15,10 +15,11 @@ import { RoomMemberKeys } from '../models/RoomMembers'
 import { UserKeys } from '../models/Users'
 import { UserProfileKeys } from '../models/UserProfiles'
 import { OrganizationMemberKeys, OrganizationMembersResult, OrganizationMembersOption } from '../models/OrganizationMembers'
-import { OrganizationMemberRoleKeys, OrganizationMemberRolesResult } from '../models/OrganizationMemberRoles'
-import { OrganizationRolesArgs, OrganizationMembersArgs } from '../generated/graphql'
+import { OrganizationMemberRoleKeys } from '../models/OrganizationMemberRoles'
+import { OrganizationMembersArgs } from '../generated/graphql'
 import { GraphQLError } from 'graphql'
 import { RoomsClient } from './rooms'
+import { RolesClient } from './Roles'
 
 const url = 'https://api.classdo.localhost:9001/graphql'
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
@@ -66,10 +67,12 @@ export type Result<R> = { errors: readonly GraphQLError[] | undefined, data: R |
 export class Client {
   private client: ApolloClient<NormalizedCacheObject>
   public rooms: RoomsClient
+  public roles: RolesClient
 
   constructor(params: { apiKey: string }) {
     this.client = createClient(params.apiKey)
     this.rooms = new RoomsClient(this)
+    this.roles = new RolesClient(this)
   }
 
   getClient() {
@@ -112,19 +115,6 @@ export class Client {
     return {
       errors: result.errors,
       data: result.errors ? null : result.data.viewer
-    }
-  }
-
-  async roles<OMR extends OrganizationMemberRoleKeys | null>(
-    fields: OMR[],
-    args?: OrganizationRolesArgs | null | undefined
-  ): Promise<Result<OrganizationMemberRolesResult<OMR>>> {
-    const result = await this.query({
-      viewer: buildViewerQuery(['id'], { roles: { fields: fields, args: args } })
-    })
-    return {
-      errors: result.errors,
-      data: result.errors ? null : (result.data.viewer as any).roles
     }
   }
 

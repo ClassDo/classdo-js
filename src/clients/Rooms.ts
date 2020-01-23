@@ -1,4 +1,4 @@
-import { Client, Result } from './index'
+import { Client, Result } from '.'
 import { RoomKeys, RoomOption, RoomsResult, RoomResult, buildCreateRoomMutation, buildDeleteRoomMutation } from '../models/Rooms'
 import { OrganizationKeys } from '../models/Organizations'
 import { RoomMemberKeys } from '../models/RoomMembers'
