@@ -14,6 +14,7 @@ import { RolesClient } from './Roles'
 import { ViewerClient } from './Viewer'
 import { OrganizationMembersClient } from './OrganizationMembers'
 import { RoomMembersClient } from './RoomMembers'
+import { InvitatationsClient } from './Invitations'
 
 const url = 'https://api.classdo.localhost:9001/graphql'
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
@@ -65,6 +66,7 @@ export class Client {
   public roles: RolesClient
   public organizationMembers: OrganizationMembersClient
   public roomMembers: RoomMembersClient
+  public invitatoins: InvitatationsClient
 
   constructor(params: { apiKey: string }) {
     this.client = createClient(params.apiKey)
@@ -73,6 +75,7 @@ export class Client {
     this.roles = new RolesClient(this)
     this.organizationMembers = new OrganizationMembersClient(this)
     this.roomMembers = new RoomMembersClient(this)
+    this.invitatoins = new InvitatationsClient(this)
   }
 
   get viewer() { return this.organization }

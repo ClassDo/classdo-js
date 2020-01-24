@@ -17,16 +17,18 @@ describe('buildInvitationQuery', () => {
 
 describe('#buildSendInvitationMutation', () => {
   it('should build a query', () => {
-      const result = buildSendInvitationMutation({
-        data: {
-          contactFullName: 'invitee',
-          contactType: ContactType.Email,
-          contactInfo: 'example@test.com',
-          locale: Locale.En,
-          organizationMemberRoleId: 'role1',
-          roomId: 'room1'
-        } 
-      }, ['id', 'contactFullName'])
+      const result = buildSendInvitationMutation(
+        ['id', 'contactFullName'], {
+          data: {
+            contactFullName: 'invitee',
+            contactType: ContactType.Email,
+            contactInfo: 'example@test.com',
+            locale: Locale.En,
+            organizationMemberRoleId: 'role1',
+            roomId: 'room1'
+          }
+        }
+      )
       compareGraphqlQuery(mutation(result),`
         mutation {
           sendInvitation(data: {

@@ -76,8 +76,8 @@ export function buildSendInvitationMutation<
   R_RM_U_UP extends UserProfileKeys | null,
   O extends OrganizationKeys | null
 >(
-  args: MutationSendInvitationArgs,
   fields: I[],
+  args: MutationSendInvitationArgs,
   option?: InvitationOption<R, R_O, R_RM, R_RM_U, R_RM_U_UP, O>
 ): { sendInvitation: InvitationResult<I, R, R_O, R_RM, R_RM_U, R_RM_U_UP, O> } {
   const pickedFields: any = pick(Invitation, fields)
