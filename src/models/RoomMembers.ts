@@ -81,7 +81,7 @@ export function buildAddRoomMembersMutation<
   fields: RM[],
   args: MutationAddRoomMembersArgs,
   option?: RoomMembersOption<U, U_UP>
-): { addRoomMembers: RoomMemberResult<RM, U, U_UP> } {
+): { addRoomMembers: RoomMemberResult<RM, U, U_UP>[] } {
   const pickedFields: any = pick(RoomMember, fields)
   const resolvedOption = option ? resolveOption(option) : {}
   return {
