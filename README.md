@@ -19,155 +19,35 @@ yarn add classdo
 ### Making requests
 
 ```js
-const ClassDoJS = require('classdo-js')
-const client = new ClassDoJS.Client({ accessToken: 'xxxxxxxx' })
-client.users.getAuthenticated().then(user => {
-  // Fetch the current user
-  console.log(user)
-}).catch(e => {
-  console.error(e)
+const { ClassDoAPIClient } = require('classdo')
+const client = new ClassDoAPIClient({ accessToken: 'xxxxxxxx' })
+client.viewer().then(result => {
+  // fetch viewer
+  console.log(result)
 })
 ```
 
+## Interface
+
+All request apis accept request to fetch specified fields and related object according our GraphQLSchema.
+
+Like below.
+
+```typescript
+client.viewer.get(['id'], {
+  rooms: { fields: ['id', 'name'] } // request to fetch rooms also
+}).then(v => {
+  if (v.data) {
+    console.log(v.data)             // viewer
+    console.log(v.data.rooms.edges) // rooms
+  }
+})
+```
+
+TODO: link
+You can see our GraphQL schema details here.
+
 ## APIs
 
-### User
-
-#### Get the authenticated user
-
-```
-client.users.getAuthenticated()
-```
-
-### Organization
-
-#### Get the authenticated organization
-
-```
-client.organizations.getAuthenticated()
-```
-
-##### Parameters
-
-TBD
-
-### Room
-
-#### Get
-
-```
-client.rooms.get(id)
-```
-
-#### List your organization's rooms
-
-```
-client.rooms.list()
-```
-
-##### Parameters
-
-| name     |required|type    |description|
-|----------|--------|--------|-----------|
-| id       | false  | string | organization id   |
-| name     | false  | string | organization name |
-| perPage  | false  | number | results per page (max 100) |
-| page     | false  | number | page number of the results to fetch |
-| ref      | false  | Object | reference for getting related objects |
-
-#### Create new room
-
-```
-client.rooms.create()
-```
-
-##### Parameters
-
-TBD
-
-#### Delete your room
-
-```
-client.rooms.delete(id)
-```
-
-##### Parameters
-
-TBD
-
-
-#### Add room member
-
-
-```
-client.rooms.addMember({ organizationId: 'xxx', roomId: 'xxx', userId: 'xxx' })
-```
-
-##### Parameters
-
-| name           |required|type    |description|
-|----------------|--------|--------|-----------|
-| organizationId | true   | string | organization id   |
-| roomId         | true   | string | room id |
-| userId         | true   | string | user id   |
-
-> Note: You can add only user that already is in your organization into a room.
-
-#### Delete your room
-
-```
-client.rooms.delete(id)
-```
-
-##### Parameters
-
-TBD
-
-### Invitation
-
-#### Get invitation list
-
-```
-client.invitations.list()
-```
-
-##### Parameters
-
-TBD
-
-
-#### Send invitation
-
-```
-client.invitations.send({ organizationId: 'xxx', roomId: 'xxx', email: 'xxx', phoneNumber: 'xxx', inviteeName: 'xxx' })
-```
-
-| name           | required | type   | description     |
-|----------------|----------|--------|-----------------|
-| roomId         | true    | string | room id         |
-| email          | false    | string | email address   |
-| phoneNumber    | false    | string | phoneNumber     |
-| inviteeName    | true     | string | invitee name    |
-
-> Note: At least you have to specify email or phoneNumber to send invitaion.
-
-
-#### Accept invitation
-
-```
-client.invitations.accept(id)
-```
-
-> Limitation: For now you can only accept invitation sended by sms.
-
-> Note: You only can accept invitation sending you.
-
-#### Decline invitation
-
-```
-client.invitations.accept(id)
-```
-
-> Limitation: For now you can only decline invitation sended by sms.
-
-> Note: You only can decline invitation sending you.
+TODO: link
+See this document.
