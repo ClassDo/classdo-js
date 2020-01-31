@@ -4,8 +4,7 @@
   "description": "ClassDo API client for browsers and NodeJS.",
   "main": "src/index.ts",
   "scripts": {
-    "update-schema": "apollo service:download schema.json",
-    "gql": "apollo client:codegen --localSchemaFile=schema.json --target typescript",
+    "typedoc": "typedoc --mode file --out docs/ ./src",
     "codegen": "graphql-codegen --config codegen.yml",
     "test": "jest"
   },
