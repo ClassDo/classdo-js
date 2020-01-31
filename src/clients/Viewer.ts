@@ -1,4 +1,4 @@
-import { Client, Result } from '.';
+import { ClassDoAPIClient, Result } from '.';
 import { ViewerKeys, ViewerOption, ViewerResult, buildViewerQuery } from '../models/Viewer';
 import { RoomKeys } from '../models/Rooms';
 import { OrganizationKeys } from '../models/Organizations';
@@ -8,9 +8,23 @@ import { UserProfileKeys } from '../models/UserProfiles';
 import { OrganizationMemberKeys } from '../models/OrganizationMembers';
 import { OrganizationMemberRoleKeys } from '../models/OrganizationMemberRoles';
 
+ /** Client to call Viewer schema */
 export class ViewerClient {
-  constructor(private client: Client) {}
+  /** @ignore */
+  constructor(private client: ClassDoAPIClient) {}
 
+  /**
+   * Get viewer.
+   * 
+   * ```typescript
+   * client.viewer.get(['id'], { rooms: { fields: ['id', 'name'] }}).then(v => {
+   *   console.log(v)
+   * })
+   * ```
+   * 
+   * @param fields Array of [[Viewer]] key names. Returns specified fields as result.
+   * @param option 
+   */
   async get<
     V extends ViewerKeys,
     R extends RoomKeys | null,

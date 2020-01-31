@@ -1,5 +1,8 @@
 import { Params } from 'typed-graphqlify/dist/render'
 
+/**
+ * @ignore
+ */
 export function pick <M extends {}, F extends keyof M> (model: M, fields: F[] | null): Pick<M, F> {
   if (!fields) {
     return {} as Pick<M, F>
@@ -10,6 +13,9 @@ export function pick <M extends {}, F extends keyof M> (model: M, fields: F[] | 
   }, {} as Pick<M, F>)
 }
 
+/**
+ * @ignore
+ */
 export function preprocessArgs (args: { [key: string]: any }): Params {
   function process (value: any): any {
     switch(typeof value) {

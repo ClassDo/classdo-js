@@ -30,11 +30,17 @@ export type RoomMembersOption<U, U_UP> = {
   user?: { fields: U[], with?: UserOption<U_UP> }
 }
 
+/**
+ * @ignore
+ */
 const buildRoomMemberEdge = <T> (roomMember: T) => ({
   node: roomMember,
   cursor: types.string
 })
 
+/**
+ * @ignore
+ */
 const buildRoomMembers = <T> (args: RoomMembersArgs | undefined | null, roomMember: T) => {
   const roomMembers = {
     totalCount: types.number,
@@ -49,6 +55,9 @@ const buildRoomMembers = <T> (args: RoomMembersArgs | undefined | null, roomMemb
   return args ? params(preprocessArgs(args), roomMembers) : roomMembers
 }
 
+/**
+ * @ignore
+ */
 function resolveOption<
   U extends UserKeys | null,
   U_UP extends UserProfileKeys | null,
@@ -57,6 +66,9 @@ function resolveOption<
   return { ...user }
 }
 
+/**
+ * @ignore
+ */
 export function buildRoomMembersQuery<
   RM extends RoomMemberKeys,
   U extends UserKeys | null,
@@ -73,6 +85,9 @@ export function buildRoomMembersQuery<
   return buildRoomMembers(args, pickedField as any)
 }
 
+/**
+ * @ignore
+ */
 export function buildAddRoomMembersMutation<
   RM extends RoomMemberKeys,
   U extends UserKeys | null,
@@ -89,6 +104,9 @@ export function buildAddRoomMembersMutation<
   }
 }
 
+/**
+ * @ignore
+ */
 export function buildDeleteRoomMemberMutation<
   RM extends RoomMemberKeys
 > (

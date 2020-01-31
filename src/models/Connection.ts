@@ -1,3 +1,6 @@
+/**
+ * @ignore
+ */
 export type Connection<T> = {
   totalCount: number,
   pageInfo: {

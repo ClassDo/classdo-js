@@ -20,6 +20,9 @@ export type UserOption<UP> = {
   profile?: { fields: UP[] }
 }
 
+/**
+ * @ignore
+ */
 export function buildUserQuery<
   U extends UserKeys,
   UP extends UserProfileKeys | null

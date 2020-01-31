@@ -40,11 +40,17 @@ export type RoomOption<O, RM, RM_U, RM_U_UP> = {
   members?: { args?: RoomMembersArgs, fields: RM[], with?: RoomMembersOption<RM_U, RM_U_UP> }
 }
 
+/**
+ * @ignore
+ */
 const buildRoomEdge = <T> (room: T) => ({
   node: room,
   cursor: types.string
 })
 
+/**
+ * @ignore
+ */
 const buildRooms = <T> (args: ViewerRoomsArgs | undefined | null, room: T) => {
   const rooms = {
     totalCount: types.number,
@@ -59,6 +65,9 @@ const buildRooms = <T> (args: ViewerRoomsArgs | undefined | null, room: T) => {
   return args ? params(preprocessArgs(args), rooms) : rooms
 }
 
+/**
+ * @ignore
+ */
 function resolveOption<
   O extends OrganizationKeys | null,
   RM extends RoomMemberKeys | null,
@@ -80,6 +89,9 @@ function resolveOption<
   return {...org, ...members }
 }
 
+/**
+ * @ignore
+ */
 export function buildRoomQuery
   <R extends RoomKeys,
    O extends OrganizationKeys | null,
@@ -95,6 +107,9 @@ export function buildRoomQuery
   return { ...pickedFields, ...resolvedOption }
 }
 
+/**
+ * @ignore
+ */
 export function buildRoomsQuery
   <R extends RoomKeys,
    O extends OrganizationKeys | null,
@@ -111,6 +126,9 @@ export function buildRoomsQuery
   return buildRooms(args, { ...pickedFields, ...resolvedOption })
 }
 
+/**
+ * @ignore
+ */
 export function buildCreateRoomMutation
   <R extends RoomKeys,
    O extends OrganizationKeys | null,
@@ -129,6 +147,9 @@ export function buildCreateRoomMutation
   }
 }
 
+/**
+ * @ignore
+ */
 export function buildDeleteRoomMutation
   <R extends RoomKeys>(
     fields: R[],

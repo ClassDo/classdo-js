@@ -13,7 +13,7 @@
     "sourceMap": true,
     "allowJs": true,
     "baseUrl": "./",
-    "lib": ["esnext"]
+    "lib": ["esnext", "dom"]
   },
   "include": [
     "src/**/*.ts"

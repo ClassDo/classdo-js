@@ -1,0 +1,711 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>classdo</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">classdo</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1>classdo</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#classdojs" id="classdojs" style="color: inherit; text-decoration: none;">
+					<h1>classdo.js</h1>
+				</a>
+				<p>ClassDo API client for browsers and NodeJS.</p>
+				<a href="#quick-start" id="quick-start" style="color: inherit; text-decoration: none;">
+					<h2>Quick Start</h2>
+				</a>
+				<p>Install via npm</p>
+				<pre><code>npm <span class="hljs-keyword">install</span> classdo</code></pre><p>Install via yarn</p>
+				<pre><code>yarn <span class="hljs-keyword">add</span><span class="bash"> classdo</span></code></pre>
+				<a href="#making-requests" id="making-requests" style="color: inherit; text-decoration: none;">
+					<h3>Making requests</h3>
+				</a>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> ClassDoJS = <span class="hljs-built_in">require</span>(<span class="hljs-string">'classdo-js'</span>)
+<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> ClassDoJS.Client({ <span class="hljs-attr">accessToken</span>: <span class="hljs-string">'xxxxxxxx'</span> })
+client.users.getAuthenticated().then(<span class="hljs-function"><span class="hljs-params">user</span> =&gt;</span> {
+  <span class="hljs-comment">// Fetch the current user</span>
+  <span class="hljs-built_in">console</span>.log(user)
+}).catch(<span class="hljs-function"><span class="hljs-params">e</span> =&gt;</span> {
+  <span class="hljs-built_in">console</span>.error(e)
+})</code></pre>
+				<a href="#apis" id="apis" style="color: inherit; text-decoration: none;">
+					<h2>APIs</h2>
+				</a>
+				<a href="#user" id="user" style="color: inherit; text-decoration: none;">
+					<h3>User</h3>
+				</a>
+				<a href="#get-the-authenticated-user" id="get-the-authenticated-user" style="color: inherit; text-decoration: none;">
+					<h4>Get the authenticated user</h4>
+				</a>
+				<pre><code><span class="hljs-selector-tag">client</span><span class="hljs-selector-class">.users</span><span class="hljs-selector-class">.getAuthenticated</span>()</code></pre>
+				<a href="#organization" id="organization" style="color: inherit; text-decoration: none;">
+					<h3>Organization</h3>
+				</a>
+				<a href="#get-the-authenticated-organization" id="get-the-authenticated-organization" style="color: inherit; text-decoration: none;">
+					<h4>Get the authenticated organization</h4>
+				</a>
+				<pre><code><span class="hljs-selector-tag">client</span><span class="hljs-selector-class">.organizations</span><span class="hljs-selector-class">.getAuthenticated</span>()</code></pre>
+				<a href="#parameters" id="parameters" style="color: inherit; text-decoration: none;">
+					<h5>Parameters</h5>
+				</a>
+				<p>TBD</p>
+				<a href="#room" id="room" style="color: inherit; text-decoration: none;">
+					<h3>Room</h3>
+				</a>
+				<a href="#get" id="get" style="color: inherit; text-decoration: none;">
+					<h4>Get</h4>
+				</a>
+				<pre><code>client.rooms.<span class="hljs-keyword">get</span>(<span class="hljs-built_in">id</span>)</code></pre>
+				<a href="#list-your-organization39s-rooms" id="list-your-organization39s-rooms" style="color: inherit; text-decoration: none;">
+					<h4>List your organization&#39;s rooms</h4>
+				</a>
+				<pre><code><span class="hljs-selector-tag">client</span><span class="hljs-selector-class">.rooms</span><span class="hljs-selector-class">.list</span>()</code></pre>
+				<a href="#parameters-1" id="parameters-1" style="color: inherit; text-decoration: none;">
+					<h5>Parameters</h5>
+				</a>
+				<table>
+					<thead>
+						<tr>
+							<th>name</th>
+							<th>required</th>
+							<th>type</th>
+							<th>description</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td>id</td>
+							<td>false</td>
+							<td>string</td>
+							<td>organization id</td>
+						</tr>
+						<tr>
+							<td>name</td>
+							<td>false</td>
+							<td>string</td>
+							<td>organization name</td>
+						</tr>
+						<tr>
+							<td>perPage</td>
+							<td>false</td>
+							<td>number</td>
+							<td>results per page (max 100)</td>
+						</tr>
+						<tr>
+							<td>page</td>
+							<td>false</td>
+							<td>number</td>
+							<td>page number of the results to fetch</td>
+						</tr>
+						<tr>
+							<td>ref</td>
+							<td>false</td>
+							<td>Object</td>
+							<td>reference for getting related objects</td>
+						</tr>
+				</tbody></table>
+				<a href="#create-new-room" id="create-new-room" style="color: inherit; text-decoration: none;">
+					<h4>Create new room</h4>
+				</a>
+				<pre><code><span class="hljs-selector-tag">client</span><span class="hljs-selector-class">.rooms</span><span class="hljs-selector-class">.create</span>()</code></pre>
+				<a href="#parameters-2" id="parameters-2" style="color: inherit; text-decoration: none;">
+					<h5>Parameters</h5>
+				</a>
+				<p>TBD</p>
+				<a href="#delete-your-room" id="delete-your-room" style="color: inherit; text-decoration: none;">
+					<h4>Delete your room</h4>
+				</a>
+				<pre><code><span class="hljs-selector-tag">client</span><span class="hljs-selector-class">.rooms</span><span class="hljs-selector-class">.delete</span>(<span class="hljs-selector-tag">id</span>)</code></pre>
+				<a href="#parameters-3" id="parameters-3" style="color: inherit; text-decoration: none;">
+					<h5>Parameters</h5>
+				</a>
+				<p>TBD</p>
+				<a href="#add-room-member" id="add-room-member" style="color: inherit; text-decoration: none;">
+					<h4>Add room member</h4>
+				</a>
+				<pre><code><span class="hljs-selector-tag">client</span><span class="hljs-selector-class">.rooms</span><span class="hljs-selector-class">.addMember</span>({ <span class="hljs-attribute">organizationId</span>: <span class="hljs-string">'xxx'</span>, roomId: <span class="hljs-string">'xxx'</span>, userId: <span class="hljs-string">'xxx'</span> })</code></pre>
+				<a href="#parameters-4" id="parameters-4" style="color: inherit; text-decoration: none;">
+					<h5>Parameters</h5>
+				</a>
+				<table>
+					<thead>
+						<tr>
+							<th>name</th>
+							<th>required</th>
+							<th>type</th>
+							<th>description</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td>organizationId</td>
+							<td>true</td>
+							<td>string</td>
+							<td>organization id</td>
+						</tr>
+						<tr>
+							<td>roomId</td>
+							<td>true</td>
+							<td>string</td>
+							<td>room id</td>
+						</tr>
+						<tr>
+							<td>userId</td>
+							<td>true</td>
+							<td>string</td>
+							<td>user id</td>
+						</tr>
+				</tbody></table>
+				<blockquote>
+					<p>Note: You can add only user that already is in your organization into a room.</p>
+				</blockquote>
+				<a href="#delete-your-room-1" id="delete-your-room-1" style="color: inherit; text-decoration: none;">
+					<h4>Delete your room</h4>
+				</a>
+				<pre><code><span class="hljs-selector-tag">client</span><span class="hljs-selector-class">.rooms</span><span class="hljs-selector-class">.delete</span>(<span class="hljs-selector-tag">id</span>)</code></pre>
+				<a href="#parameters-5" id="parameters-5" style="color: inherit; text-decoration: none;">
+					<h5>Parameters</h5>
+				</a>
+				<p>TBD</p>
+				<a href="#invitation" id="invitation" style="color: inherit; text-decoration: none;">
+					<h3>Invitation</h3>
+				</a>
+				<a href="#get-invitation-list" id="get-invitation-list" style="color: inherit; text-decoration: none;">
+					<h4>Get invitation list</h4>
+				</a>
+				<pre><code><span class="hljs-selector-tag">client</span><span class="hljs-selector-class">.invitations</span><span class="hljs-selector-class">.list</span>()</code></pre>
+				<a href="#parameters-6" id="parameters-6" style="color: inherit; text-decoration: none;">
+					<h5>Parameters</h5>
+				</a>
+				<p>TBD</p>
+				<a href="#send-invitation" id="send-invitation" style="color: inherit; text-decoration: none;">
+					<h4>Send invitation</h4>
+				</a>
+				<pre><code><span class="hljs-selector-tag">client</span><span class="hljs-selector-class">.invitations</span><span class="hljs-selector-class">.send</span>({ <span class="hljs-attribute">organizationId</span>: <span class="hljs-string">'xxx'</span>, roomId: <span class="hljs-string">'xxx'</span>, email: <span class="hljs-string">'xxx'</span>, phoneNumber: <span class="hljs-string">'xxx'</span>, inviteeName: <span class="hljs-string">'xxx'</span> })</code></pre><table>
+					<thead>
+						<tr>
+							<th>name</th>
+							<th>required</th>
+							<th>type</th>
+							<th>description</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td>roomId</td>
+							<td>true</td>
+							<td>string</td>
+							<td>room id</td>
+						</tr>
+						<tr>
+							<td>email</td>
+							<td>false</td>
+							<td>string</td>
+							<td>email address</td>
+						</tr>
+						<tr>
+							<td>phoneNumber</td>
+							<td>false</td>
+							<td>string</td>
+							<td>phoneNumber</td>
+						</tr>
+						<tr>
+							<td>inviteeName</td>
+							<td>true</td>
+							<td>string</td>
+							<td>invitee name</td>
+						</tr>
+				</tbody></table>
+				<blockquote>
+					<p>Note: At least you have to specify email or phoneNumber to send invitaion.</p>
+				</blockquote>
+				<a href="#accept-invitation" id="accept-invitation" style="color: inherit; text-decoration: none;">
+					<h4>Accept invitation</h4>
+				</a>
+				<pre><code><span class="hljs-selector-tag">client</span><span class="hljs-selector-class">.invitations</span><span class="hljs-selector-class">.accept</span>(<span class="hljs-selector-tag">id</span>)</code></pre><blockquote>
+					<p>Limitation: For now you can only accept invitation sended by sms.</p>
+				</blockquote>
+				<blockquote>
+					<p>Note: You only can accept invitation sending you.</p>
+				</blockquote>
+				<a href="#decline-invitation" id="decline-invitation" style="color: inherit; text-decoration: none;">
+					<h4>Decline invitation</h4>
+				</a>
+				<pre><code><span class="hljs-selector-tag">client</span><span class="hljs-selector-class">.invitations</span><span class="hljs-selector-class">.accept</span>(<span class="hljs-selector-tag">id</span>)</code></pre><blockquote>
+					<p>Limitation: For now you can only decline invitation sended by sms.</p>
+				</blockquote>
+				<blockquote>
+					<p>Note: You only can decline invitation sending you.</p>
+				</blockquote>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-enum tsd-is-external">
+						<a href="enums/contacttype.html" class="tsd-kind-icon">Contact<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-enum tsd-is-external">
+						<a href="enums/invitationstatus.html" class="tsd-kind-icon">Invitation<wbr>Status</a>
+					</li>
+					<li class=" tsd-kind-enum tsd-is-external">
+						<a href="enums/locale.html" class="tsd-kind-icon">Locale</a>
+					</li>
+					<li class=" tsd-kind-enum tsd-is-external">
+						<a href="enums/organizationmemberorderbyinput.html" class="tsd-kind-icon">Organization<wbr>Member<wbr>Order<wbr>ByInput</a>
+					</li>
+					<li class=" tsd-kind-enum tsd-is-external">
+						<a href="enums/organizationmemberroleorderbyinput.html" class="tsd-kind-icon">Organization<wbr>Member<wbr>Role<wbr>Order<wbr>ByInput</a>
+					</li>
+					<li class=" tsd-kind-enum tsd-is-external">
+						<a href="enums/permissionaction.html" class="tsd-kind-icon">Permission<wbr>Action</a>
+					</li>
+					<li class=" tsd-kind-enum tsd-is-external">
+						<a href="enums/roommemberorderbyinput.html" class="tsd-kind-icon">Room<wbr>Member<wbr>Order<wbr>ByInput</a>
+					</li>
+					<li class=" tsd-kind-enum tsd-is-external">
+						<a href="enums/roomorderbyinput.html" class="tsd-kind-icon">Room<wbr>Order<wbr>ByInput</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-external">
+						<a href="classes/classdoapiclient.html" class="tsd-kind-icon">Class<wbr>DoAPIClient</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-external">
+						<a href="classes/invitatationsclient.html" class="tsd-kind-icon">Invitatations<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-external">
+						<a href="classes/organizationmembersclient.html" class="tsd-kind-icon">Organization<wbr>Members<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-external">
+						<a href="classes/rolesclient.html" class="tsd-kind-icon">Roles<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-external">
+						<a href="classes/roommembersclient.html" class="tsd-kind-icon">Room<wbr>Members<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-external">
+						<a href="classes/roomsclient.html" class="tsd-kind-icon">Rooms<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-external">
+						<a href="classes/viewerclient.html" class="tsd-kind-icon">Viewer<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#iorganization" class="tsd-kind-icon">IOrganization</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#invitation" class="tsd-kind-icon">Invitation</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#invitationkeys" class="tsd-kind-icon">Invitation<wbr>Keys</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+						<a href="globals.html#invitationoption" class="tsd-kind-icon">Invitation<wbr>Option</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+						<a href="globals.html#invitationresult" class="tsd-kind-icon">Invitation<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#invitationtype" class="tsd-kind-icon">Invitation<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#invitationssendinput" class="tsd-kind-icon">Invitations<wbr>Send<wbr>Input</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+						<a href="globals.html#maybe" class="tsd-kind-icon">Maybe</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#mutation" class="tsd-kind-icon">Mutation</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#mutationaddroommembersargs" class="tsd-kind-icon">Mutation<wbr>Add<wbr>Room<wbr>Members<wbr>Args</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#mutationcreateroomargs" class="tsd-kind-icon">Mutation<wbr>Create<wbr>Room<wbr>Args</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#mutationdeleteroomargs" class="tsd-kind-icon">Mutation<wbr>Delete<wbr>Room<wbr>Args</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#mutationdeleteroommemberargs" class="tsd-kind-icon">Mutation<wbr>Delete<wbr>Room<wbr>Member<wbr>Args</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#mutationsendinvitationargs" class="tsd-kind-icon">Mutation<wbr>Send<wbr>Invitation<wbr>Args</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#organization" class="tsd-kind-icon">Organization</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#organizationkeys" class="tsd-kind-icon">Organization<wbr>Keys</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#organizationmember" class="tsd-kind-icon">Organization<wbr>Member</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#organizationmemberedge" class="tsd-kind-icon">Organization<wbr>Member<wbr>Edge</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#organizationmemberkeys" class="tsd-kind-icon">Organization<wbr>Member<wbr>Keys</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+						<a href="globals.html#organizationmemberresult" class="tsd-kind-icon">Organization<wbr>Member<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#organizationmemberrole" class="tsd-kind-icon">Organization<wbr>Member<wbr>Role</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#organizationmemberroleedge" class="tsd-kind-icon">Organization<wbr>Member<wbr>Role<wbr>Edge</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#organizationmemberrolekeys" class="tsd-kind-icon">Organization<wbr>Member<wbr>Role<wbr>Keys</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+						<a href="globals.html#organizationmemberroleresult" class="tsd-kind-icon">Organization<wbr>Member<wbr>Role<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#organizationmemberroletype" class="tsd-kind-icon">Organization<wbr>Member<wbr>Role<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#organizationmemberrolewhereinput" class="tsd-kind-icon">Organization<wbr>Member<wbr>Role<wbr>Where<wbr>Input</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#organizationmemberroles" class="tsd-kind-icon">Organization<wbr>Member<wbr>Roles</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+						<a href="globals.html#organizationmemberrolesresult" class="tsd-kind-icon">Organization<wbr>Member<wbr>Roles<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#organizationmembertype" class="tsd-kind-icon">Organization<wbr>Member<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#organizationmemberwhereinput" class="tsd-kind-icon">Organization<wbr>Member<wbr>Where<wbr>Input</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#organizationmembers" class="tsd-kind-icon">Organization<wbr>Members</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#organizationmembersargs" class="tsd-kind-icon">Organization<wbr>Members<wbr>Args</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#organizationmembersinput" class="tsd-kind-icon">Organization<wbr>Members<wbr>Input</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+						<a href="globals.html#organizationmembersoption" class="tsd-kind-icon">Organization<wbr>Members<wbr>Option</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+						<a href="globals.html#organizationmembersresult" class="tsd-kind-icon">Organization<wbr>Members<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+						<a href="globals.html#organizationresult" class="tsd-kind-icon">Organization<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#organizationrolesargs" class="tsd-kind-icon">Organization<wbr>Roles<wbr>Args</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#organizationroomsargs" class="tsd-kind-icon">Organization<wbr>Rooms<wbr>Args</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#organizationtype" class="tsd-kind-icon">Organization<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#pageinfo" class="tsd-kind-icon">Page<wbr>Info</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#permission" class="tsd-kind-icon">Permission</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#query" class="tsd-kind-icon">Query</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+						<a href="globals.html#result" class="tsd-kind-icon">Result</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#rolesinput" class="tsd-kind-icon">Roles<wbr>Input</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#room" class="tsd-kind-icon">Room</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#roomcreateinput" class="tsd-kind-icon">Room<wbr>Create<wbr>Input</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#roomedge" class="tsd-kind-icon">Room<wbr>Edge</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#roomkeys" class="tsd-kind-icon">Room<wbr>Keys</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#roommember" class="tsd-kind-icon">Room<wbr>Member</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#roommemberedge" class="tsd-kind-icon">Room<wbr>Member<wbr>Edge</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#roommemberkeys" class="tsd-kind-icon">Room<wbr>Member<wbr>Keys</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+						<a href="globals.html#roommemberresult" class="tsd-kind-icon">Room<wbr>Member<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#roommembertype" class="tsd-kind-icon">Room<wbr>Member<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#roommemberwhereinput" class="tsd-kind-icon">Room<wbr>Member<wbr>Where<wbr>Input</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#roommembers" class="tsd-kind-icon">Room<wbr>Members</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#roommembersaddinput" class="tsd-kind-icon">Room<wbr>Members<wbr>Add<wbr>Input</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#roommembersargs" class="tsd-kind-icon">Room<wbr>Members<wbr>Args</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#roommembersinput" class="tsd-kind-icon">Room<wbr>Members<wbr>Input</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+						<a href="globals.html#roommembersoption" class="tsd-kind-icon">Room<wbr>Members<wbr>Option</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+						<a href="globals.html#roommembersresult" class="tsd-kind-icon">Room<wbr>Members<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+						<a href="globals.html#roomoption" class="tsd-kind-icon">Room<wbr>Option</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+						<a href="globals.html#roomresult" class="tsd-kind-icon">Room<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#roomtype" class="tsd-kind-icon">Room<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#roomwhereinput" class="tsd-kind-icon">Room<wbr>Where<wbr>Input</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#rooms" class="tsd-kind-icon">Rooms</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#roomsinput" class="tsd-kind-icon">Rooms<wbr>Input</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+						<a href="globals.html#roomsresult" class="tsd-kind-icon">Rooms<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#scalars" class="tsd-kind-icon">Scalars</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#user" class="tsd-kind-icon">User</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#userkeys" class="tsd-kind-icon">User<wbr>Keys</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+						<a href="globals.html#useroption" class="tsd-kind-icon">User<wbr>Option</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#userprofile" class="tsd-kind-icon">User<wbr>Profile</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#userprofilekeys" class="tsd-kind-icon">User<wbr>Profile<wbr>Keys</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+						<a href="globals.html#userprofileresult" class="tsd-kind-icon">User<wbr>Profile<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#userprofiletype" class="tsd-kind-icon">User<wbr>Profile<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#userprofilewhereinput" class="tsd-kind-icon">User<wbr>Profile<wbr>Where<wbr>Input</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+						<a href="globals.html#userresult" class="tsd-kind-icon">User<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#usertype" class="tsd-kind-icon">User<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#userwhereinput" class="tsd-kind-icon">User<wbr>Where<wbr>Input</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#viewer" class="tsd-kind-icon">Viewer</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#viewerkeys" class="tsd-kind-icon">Viewer<wbr>Keys</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#viewermembersargs" class="tsd-kind-icon">Viewer<wbr>Members<wbr>Args</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+						<a href="globals.html#vieweroption" class="tsd-kind-icon">Viewer<wbr>Option</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-external">
+						<a href="globals.html#viewerresult" class="tsd-kind-icon">Viewer<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#viewerrolesargs" class="tsd-kind-icon">Viewer<wbr>Roles<wbr>Args</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#viewerroomsargs" class="tsd-kind-icon">Viewer<wbr>Rooms<wbr>Args</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#viewertype" class="tsd-kind-icon">Viewer<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-external">
+						<a href="globals.html#invitation" class="tsd-kind-icon">Invitation</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-external">
+						<a href="globals.html#organization" class="tsd-kind-icon">Organization</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-external">
+						<a href="globals.html#organizationmember" class="tsd-kind-icon">Organization<wbr>Member</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-external">
+						<a href="globals.html#organizationmemberrole" class="tsd-kind-icon">Organization<wbr>Member<wbr>Role</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-external">
+						<a href="globals.html#room" class="tsd-kind-icon">Room</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-external">
+						<a href="globals.html#roommember" class="tsd-kind-icon">Room<wbr>Member</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-external">
+						<a href="globals.html#user" class="tsd-kind-icon">User</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-external">
+						<a href="globals.html#userprofile" class="tsd-kind-icon">User<wbr>Profile</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-external">
+						<a href="globals.html#viewer" class="tsd-kind-icon">Viewer</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>

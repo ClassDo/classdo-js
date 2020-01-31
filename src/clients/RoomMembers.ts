@@ -1,13 +1,28 @@
-import { Client, Result } from '.'
+import { ClassDoAPIClient, Result } from '.'
 import { RoomMemberKeys, RoomMembersOption, RoomMemberResult, buildAddRoomMembersMutation, buildDeleteRoomMemberMutation, RoomMembersResult } from '../models/RoomMembers';
 import { UserKeys } from '../models/Users';
 import { UserProfileKeys } from '../models/UserProfiles';
 import { MutationAddRoomMembersArgs, MutationDeleteRoomMemberArgs, RoomMembersArgs } from 'src/generated/graphql';
 import { buildViewerQuery } from '../models/Viewer';
 
+/** Client to call RoomMembers schema */
 export class RoomMembersClient {
-  constructor(private client: Client) {}
+  /** @ignore */
+  constructor(private client: ClassDoAPIClient) {}
   
+  /**
+   * Get a room member.
+   * 
+   * ```typescript
+   * client.roomMembers.get(['id'], 'xxxxxxxxxxxx').then(v => {
+   *   console.log(v)
+   * })
+   * ```
+   * 
+   * @param fields Array of [[RoomMember]] key names. Returns specified fields as result.
+   * @param id 
+   * @param option 
+   */
   async get<
     RM extends RoomMemberKeys,
     U extends UserKeys | null,
@@ -43,6 +58,19 @@ export class RoomMembersClient {
     }
   }
 
+  /**
+   * Get list of room members.
+   * 
+   * ```typescript
+   * client.roomMembers.list(['id'], 'xxxxxxxxxxxx').then(v => {
+   *   console.log(v)
+   * })
+   * ```
+   * @param fields Array of [[RoomMember]] key names. Returns specified fields as result.
+   * @param roomId Room id.
+   * @param args 
+   * @param option 
+   */
   async list<
     RM extends RoomMemberKeys,
     U extends UserKeys | null,
@@ -77,6 +105,19 @@ export class RoomMembersClient {
     }
   }
 
+  /**
+   * Add new room member into the room.
+   * 
+   * ```typescript
+   * client.roomMembers.create(['id'], { data: { roomId: 'xxxxxxxxxxxx', userIds: ['xxxxxxxxxxxx'] }}).then(v => {
+   *   console.log(result)
+   * })
+   * ```
+   * 
+   * @param fields Array of [[RoomMember]] key names. Returns specified fields as result.
+   * @param args 
+   * @param option 
+   */
   async create<
     RM extends RoomMemberKeys,
     U extends UserKeys | null,
@@ -95,6 +136,18 @@ export class RoomMembersClient {
     }
   }
 
+  /**
+   * Remove a room member.
+   * 
+   * ```typescript
+   * client.roomMembers.delete(['id'], { id: 'xxxxxxxxxxxx' }).then(v => {
+   *   console.log(v)
+   * })
+   * ```
+   * 
+   * @param fields Array of [[RoomMember]] key names. Returns specified fields as result.
+   * @param args 
+   */
   async delete<RM extends RoomMemberKeys>(
     fields: RM[],
     args: MutationDeleteRoomMemberArgs

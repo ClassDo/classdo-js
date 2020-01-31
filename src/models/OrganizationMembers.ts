@@ -35,11 +35,17 @@ export type OrganizationMembersOption<U, U_UP, OMR> = {
   role?: { fields: OMR[] }
 }
 
+/**
+ * @ignore
+ */
 const buildOrganizationMemberEdge = <T> (organizationMember: T) => ({
   node: organizationMember,
   cursor: types.string
 })
 
+/**
+ * @ignore
+ */
 const buildOrganizationMembers = <T> (
   args: OrganizationMembersArgs | undefined | null,
   organizationMember: T) => {
@@ -56,6 +62,9 @@ const buildOrganizationMembers = <T> (
   return args ? params(preprocessArgs(args), roomMembers) : roomMembers
 }
 
+/**
+ * @ignore
+ */
 export function buildOrganizationMembersQuery<
   OM extends OrganizationMemberKeys,
   U extends UserKeys | null,

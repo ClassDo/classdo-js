@@ -13,6 +13,9 @@ export type UserProfileKeys = keyof UserProfileType
 export type UserProfileResult<UP extends UserProfileKeys> =
   Pick<UserProfileType, UP>
 
+  /**
+ * @ignore
+ */
 export function buildUserProfileQuery<
   UP extends UserProfileKeys
 >(fields: UP[]): UserProfileResult<UP> {

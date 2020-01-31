@@ -1,4 +1,4 @@
-import { Client, Result } from '.'
+import { ClassDoAPIClient, Result } from '.'
 import { InvitationKeys, buildSendInvitationMutation, InvitationOption, InvitationResult } from '../models/Invitations';
 import { RoomKeys } from '../models/Rooms';
 import { OrganizationKeys } from '../models/Organizations';
@@ -7,9 +7,33 @@ import { UserKeys } from '../models/Users';
 import { UserProfileKeys } from '../models/UserProfiles';
 import { MutationSendInvitationArgs } from '../generated/graphql';
 
+/** Client to call mutation for invitations */
 export class InvitatationsClient {
-  constructor(private client: Client) {}
+  /** @ignore */
+  constructor(private client: ClassDoAPIClient) {}
 
+  /**
+   * Send an invitatoin.
+   * 
+   * ```typescript
+   * client.invitatoins.send(['id'], {
+   *   data: {
+   *     contactFullName: 'joe',
+   *     contactType: ContactType.Email,
+   *     contactInfo: 'example@gmail.com',
+   *     organizationMemberRoleId: 'xxxxxxxxxxxxxxxxxx',
+   *     roomId: 'xxxxxxxxxxxxxxxxxx',
+   *     locale: Enum.Locale.En
+   *   }
+   * }).then(v => {
+   *   console.log(v)
+   * })
+   * ```
+   * 
+   * @param fields Array of [[Invitation]] key names. Returns specified fields as result.
+   * @param args 
+   * @param option
+   */
   async send<
     I extends InvitationKeys,
     R extends RoomKeys | null,

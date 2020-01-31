@@ -50,6 +50,9 @@ function resolveOption<
   return { ...org, ...room }
 }
 
+/**
+ * @ignore
+ */
 export function buildInvitationQuery<
   I extends InvitationKeys,
   R extends RoomKeys | null,
@@ -67,6 +70,9 @@ export function buildInvitationQuery<
   return { ...pickedField, ...resolvedOption }
 }
 
+/**
+ * @ignore
+ */
 export function buildSendInvitationMutation<
   I extends InvitationKeys,
   R extends RoomKeys | null,

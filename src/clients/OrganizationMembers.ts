@@ -1,4 +1,4 @@
-import { Client, Result } from '.';
+import { ClassDoAPIClient, Result } from '.';
 import { OrganizationMemberKeys, OrganizationMembersOption, OrganizationMembersResult, OrganizationMemberResult } from '../models/OrganizationMembers';
 import { UserKeys } from '../models/Users';
 import { UserProfileKeys } from '../models/UserProfiles';
@@ -6,9 +6,24 @@ import { OrganizationMemberRoleKeys } from '../models/OrganizationMemberRoles';
 import { OrganizationMembersArgs } from '../generated/graphql';
 import { buildViewerQuery } from '../models/Viewer';
 
+/** Client to call OrganizatoinMembers schema */
 export class OrganizationMembersClient {
-  constructor(private client: Client) {}
+  /** @ignore */
+  constructor(private client: ClassDoAPIClient) {}
 
+  /**
+   * Get list of OrganizationMember.
+   * 
+   * ```typescript
+   * client.organizationMembers.list(['id']).then(v => {
+   *   console.log(v)
+   * })
+   * ```
+   * 
+   * @param fields Array of [[OrganizationMember]] key names. Returns specified fields as result.
+   * @param args 
+   * @param option 
+   */
   async list<
     OM extends OrganizationMemberKeys | null,
     OM_U extends UserKeys | null,
@@ -30,6 +45,19 @@ export class OrganizationMembersClient {
     }
   }
 
+  /**
+   * Get a OrganizationMember.
+   * 
+   * ```typescript
+   * client.organizationMembers.get(['id'], 'ck4l8tsef03nn0726825k3k9t').then(v => {
+   *   console.log(v.data?.id)
+   * })
+   * ```
+   * 
+   * @param fields Array of [[OrganizationMember]] key names. Returns specified fields as result.
+   * @param id Organization member id.
+   * @param option 
+   */
   async get<
     OM extends OrganizationMemberKeys | null,
     OM_U extends UserKeys | null,

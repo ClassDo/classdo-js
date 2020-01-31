@@ -52,6 +52,9 @@ export type ViewerResult<
   ([OM] extends [OrganizationMemberKeys] ? { members: OrganizationMembersResult<OM, OM_U, OM_U_UP, OM_OMR> } : {}) &
   ([OMR] extends [OrganizationMemberRoleKeys] ? { roles: OrganizationMemberRolesResult<OMR> } : {})
 
+/**
+ * @ignore
+ */
 export function buildViewerQuery <
   V extends ViewerKeys,
   R extends RoomKeys | null,

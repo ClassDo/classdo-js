@@ -20,11 +20,17 @@ export type OrganizationMemberRolesResult<
   OMR extends OrganizationMemberRoleKeys | null
 > = Connection<OrganizationMemberRoleResult<OMR>>
 
+/**
+ * @ignore
+ */
 const buildOrganizationMemberRoleEdge = <T> (role: T) => ({
   node: role,
   cursor: types.string
 })
 
+/**
+ * @ignore
+ */
 const buildOrganizationMemberRoles = <T> (args: OrganizationRolesArgs | undefined | null, role: T) => {
   const roomMembers = {
     totalCount: types.number,
@@ -39,6 +45,9 @@ const buildOrganizationMemberRoles = <T> (args: OrganizationRolesArgs | undefine
   return args ? params(preprocessArgs(args), roomMembers) : roomMembers
 }
 
+/**
+ * @ignore
+ */
 export function buildOrganizationMemberRoleQuery<
   OMR extends OrganizationMemberRoleKeys
 >(
@@ -48,6 +57,9 @@ export function buildOrganizationMemberRoleQuery<
   return pickedField
 }
 
+/**
+ * @ignore
+ */
 export function buildOrganizationMemberRolesQuery<
   OMR extends OrganizationMemberRoleKeys
 >(

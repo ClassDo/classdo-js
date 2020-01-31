@@ -12,7 +12,9 @@ export type OrganizationKeys = keyof OrganizationType
 export type OrganizationResult< O extends OrganizationKeys> =
   Pick<OrganizationType, O>
 
-
+/**
+ * @ignore
+ */
 export function buildOrganizationQuery<
   O extends OrganizationKeys
 >(fields: O[]): OrganizationResult<O> {

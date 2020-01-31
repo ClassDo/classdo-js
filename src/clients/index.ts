@@ -16,9 +16,12 @@ import { OrganizationMembersClient } from './OrganizationMembers'
 import { RoomMembersClient } from './RoomMembers'
 import { InvitatationsClient } from './Invitations'
 
-const url = 'https://api.classdo.localhost:9001/graphql'
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+/** @ignore */
+const url = process.env.CLASSDO_API_URL || 'https://api.classdo.com/graphql'
 
+/**
+ * @ignore
+ */
 function createLink(
   endpoint: string,
   getTokenCb: () => string | null
@@ -44,6 +47,9 @@ function createLink(
   return from([authMiddleware, errorLink, httpLink])
 }
 
+/**
+ * @ignore
+ */
 function createClient(apiKey: string): ApolloClient<NormalizedCacheObject> {
   const capellaLink = createLink(
     url,
@@ -59,15 +65,37 @@ function createClient(apiKey: string): ApolloClient<NormalizedCacheObject> {
 }
 
 export type Result<R> = { errors: readonly GraphQLError[] | undefined, data: R | null }
-export class Client {
+
+/**
+ * The ClassDoAPIClient class encapsulates all logics to call ClassDo APIs from client side.
+ */
+export class ClassDoAPIClient {
   private client: ApolloClient<NormalizedCacheObject>
+  /** Client to call Viewer schema */
   public organization: ViewerClient 
+  /** Client to call Rooms schema and mutation for rooms */
   public rooms: RoomsClient
+  /** Client to call Roles schema */
   public roles: RolesClient
+  /** Client to call OrganizatoinMembers schema */
   public organizationMembers: OrganizationMembersClient
+  /** Client to call RoomMembers schema */
   public roomMembers: RoomMembersClient
+  /** Client to call mutation for invitations */
   public invitatoins: InvitatationsClient
 
+  /**
+   * The ClassDoAPIClient constructor
+   * 
+   * ```typescript
+   * const client = new ClassDoAPIClient({ apiKey: 'xxxxxxxxxxxx' })
+   * client.viewer.get(['id'], { rooms: { fields: ['id', 'name'] }}).then(v => {
+   *   console.log(v)
+   * }) 
+   * ```
+   * 
+   * @param params apiKey: API Key to call ClassDo public API.
+   */
   constructor(params: { apiKey: string }) {
     this.client = createClient(params.apiKey)
     this.organization = new ViewerClient(this)
@@ -78,6 +106,9 @@ export class Client {
     this.invitatoins = new InvitatationsClient(this)
   }
 
+  /**
+  * Alias for [[organization]] property.
+  */
   get viewer() { return this.organization }
 
   getClient() {
