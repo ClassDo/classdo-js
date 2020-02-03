@@ -5,7 +5,6 @@ import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory'
 import { from, FetchResult } from 'apollo-link'
 import { setContext } from 'apollo-link-context'
 import { onError } from 'apollo-link-error'
-import Log from 'loglevel'
 import gql from 'graphql-tag'
 import { query, mutation } from 'typed-graphqlify'
 import { GraphQLError } from 'graphql'
@@ -36,12 +35,12 @@ function createLink(
         const errlog = `[GraphQL error: ${endpoint}]: Message: ${message}, Location: ${JSON.stringify(
           locations
         )}, Path: ${path}`
-        Log.error(errlog)
+        console.error(errlog)
       })
     }
     if (networkError) {
       const errlog = `[Network error]: ${networkError}`
-      Log.error(errlog)
+      console.error(errlog)
     }
   })
   return from([authMiddleware, errorLink, httpLink])
