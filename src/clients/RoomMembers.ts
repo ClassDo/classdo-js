@@ -1,8 +1,15 @@
 import { ClassDoAPIClient, Result } from '.'
-import { RoomMemberKeys, RoomMembersOption, RoomMemberResult, buildAddRoomMembersMutation, buildDeleteRoomMemberMutation, RoomMembersResult } from '../models/RoomMembers';
+import {
+  RoomMemberKeys,
+  RoomMembersOption,
+  RoomMemberResult,
+  buildAddRoomMembersMutation,
+  buildDeleteRoomMemberMutation,
+  RoomMembersResult
+} from '../models/RoomMembers';
 import { UserKeys } from '../models/Users';
 import { UserProfileKeys } from '../models/UserProfiles';
-import { MutationAddRoomMembersArgs, MutationDeleteRoomMemberArgs, RoomMembersArgs } from 'src/generated/graphql';
+import { MutationAddRoomMembersArgs, MutationDeleteRoomMemberArgs, RoomMembersArgs } from '../generated/graphql';
 import { buildViewerQuery } from '../models/Viewer';
 
 /** Client to call RoomMembers schema */

@@ -1,5 +1,5 @@
 import { ClassDoAPIClient, Result } from '.';
-import { OrganizationMemberRoleKeys, OrganizationMemberRolesResult } from 'src/models/OrganizationMemberRoles';
+import { OrganizationMemberRoleKeys, OrganizationMemberRolesResult } from '../models/OrganizationMemberRoles';
 import { OrganizationRolesArgs } from '../generated/graphql';
 import { buildViewerQuery } from '../models/Viewer';
 

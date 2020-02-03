@@ -2,11 +2,14 @@
   "name": "classdo",
   "version": "0.0.1",
   "description": "ClassDo API client for browsers and NodeJS.",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "typedoc": "typedoc --mode file --out docs/ ./src",
     "codegen": "graphql-codegen --config codegen.yml",
-    "test": "jest"
+    "test": "jest",
+    "clean": "rm -rf dist",
+    "build": "yarn clean && tsc -p ."
   },
   "repository": "git@github.com:ClassDo/classdo-js.git",
   "author": "ClassDo",
