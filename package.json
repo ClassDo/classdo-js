@@ -2,6 +2,12 @@
   "name": "classdo",
   "version": "0.0.1",
   "description": "ClassDo API client for browsers and NodeJS.",
+  "keywords": [
+    "ClassDo",
+    "collaboration",
+    "video chat",
+    "virtual room"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -14,10 +20,11 @@
     "clean": "rm -rf dist",
     "build": "yarn clean && tsc -p ."
   },
+  "bugs": "https://github.com/ClassDo/classdo-js/issues",
+  "homepage": "https://github.com/ClassDo/classdo-js",
   "repository": "git@github.com:ClassDo/classdo-js.git",
   "author": "ClassDo",
   "license": "MIT",
-  "private": false,
   "dependencies": {
     "apollo": "^2.21.2",
     "apollo-cache-inmemory": "^1.6.5",
