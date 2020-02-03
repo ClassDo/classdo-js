@@ -44,10 +44,8 @@ client.viewer.get(['id'], {
 })
 ```
 
-TODO: link
-You can see our GraphQL schema details here.
+You can see our GraphQL schema details are [here](https://developer.classdo.com/schema/).
 
 ## APIs
 
-TODO: link
-See this document.
+See [this document](https://developer.classdo.com/classdo-js).
