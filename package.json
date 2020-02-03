@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "ClassDo API client for browsers and NodeJS.",
   "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "typedoc": "typedoc --mode file --out docs/ ./src",
     "codegen": "graphql-codegen --config codegen.yml",
