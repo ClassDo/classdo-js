@@ -49,3 +49,7 @@ You can see our GraphQL schema details are [here](https://developer.classdo.com/
 ## APIs
 
 See [this document](https://developer.classdo.com/classdo-js).
+
+## License
+
+MIT
