@@ -31,7 +31,7 @@ export function preprocessArgs (args: { [key: string]: any }): Params {
         }
         if (value !== null) {
           return Object.keys(value).reduce((p, key) => {
-             if (['contactType', 'locale'].includes(key)) {
+             if (['contactType', 'locale', 'orderBy'].includes(key)) {
                // for enum type don't do anything.
                p[key] = value[key]
                return p
