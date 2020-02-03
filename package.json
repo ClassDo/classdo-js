@@ -4,6 +4,9 @@
   "description": "ClassDo API client for browsers and NodeJS.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "typedoc": "typedoc --mode file --out docs/ ./src",
     "codegen": "graphql-codegen --config codegen.yml",
