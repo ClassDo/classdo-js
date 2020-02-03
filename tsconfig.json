@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2019",
+    "target": "es5",
     "module": "commonjs",
     "strict": true,
     "declaration": true,
@@ -15,10 +15,12 @@
     "allowJs": true,
     "rootDir": "src",
     "outDir": "dist",
-    "lib": ["esnext", "dom"],
+    "lib": [
+      "esnext",
+      "dom"
+    ],
   },
   "include": [
     "src/**/*.ts"
-  ],
-  "exclude": ["node_modules", "dist"]
+  ]
 }
