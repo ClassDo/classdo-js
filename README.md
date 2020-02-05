@@ -31,7 +31,7 @@ client.viewer().then(result => {
 
 ## Interface
 
-All request apis accept request to fetch specified fields and related object according our GraphQLSchema.
+All request apis accept request to fetch specified fields and related object according to our GraphQLSchema.
 
 Like below.
 
@@ -46,7 +46,7 @@ client.viewer.get(['id'], {
 })
 ```
 
-You can see our GraphQL schema details are [here](https://developer.classdo.com/schema/).
+You can see our GraphQL schema details [here](https://developer.classdo.com/schema/).
 
 ## APIs
 
