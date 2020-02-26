@@ -6,12 +6,65 @@ export type Scalars = {
   Boolean: boolean,
   Int: number,
   Float: number,
+  DateTime: any,
 };
 
 export enum ContactType {
   PhoneNumber = 'PhoneNumber',
   Email = 'Email'
 }
+
+
+export type EmailWhereInput = {
+  id?: Maybe<Scalars['ID']>,
+  id_not?: Maybe<Scalars['ID']>,
+  id_in?: Maybe<Array<Scalars['ID']>>,
+  id_not_in?: Maybe<Array<Scalars['ID']>>,
+  id_lt?: Maybe<Scalars['ID']>,
+  id_lte?: Maybe<Scalars['ID']>,
+  id_gt?: Maybe<Scalars['ID']>,
+  id_gte?: Maybe<Scalars['ID']>,
+  id_contains?: Maybe<Scalars['ID']>,
+  id_not_contains?: Maybe<Scalars['ID']>,
+  id_starts_with?: Maybe<Scalars['ID']>,
+  id_not_starts_with?: Maybe<Scalars['ID']>,
+  id_ends_with?: Maybe<Scalars['ID']>,
+  id_not_ends_with?: Maybe<Scalars['ID']>,
+  createdAt?: Maybe<Scalars['DateTime']>,
+  createdAt_not?: Maybe<Scalars['DateTime']>,
+  createdAt_in?: Maybe<Array<Scalars['DateTime']>>,
+  createdAt_not_in?: Maybe<Array<Scalars['DateTime']>>,
+  createdAt_lt?: Maybe<Scalars['DateTime']>,
+  createdAt_lte?: Maybe<Scalars['DateTime']>,
+  createdAt_gt?: Maybe<Scalars['DateTime']>,
+  createdAt_gte?: Maybe<Scalars['DateTime']>,
+  updatedAt?: Maybe<Scalars['DateTime']>,
+  updatedAt_not?: Maybe<Scalars['DateTime']>,
+  updatedAt_in?: Maybe<Array<Scalars['DateTime']>>,
+  updatedAt_not_in?: Maybe<Array<Scalars['DateTime']>>,
+  updatedAt_lt?: Maybe<Scalars['DateTime']>,
+  updatedAt_lte?: Maybe<Scalars['DateTime']>,
+  updatedAt_gt?: Maybe<Scalars['DateTime']>,
+  updatedAt_gte?: Maybe<Scalars['DateTime']>,
+  userProfiles?: Maybe<UserProfileWhereInput>,
+  value?: Maybe<Scalars['String']>,
+  value_not?: Maybe<Scalars['String']>,
+  value_in?: Maybe<Array<Scalars['String']>>,
+  value_not_in?: Maybe<Array<Scalars['String']>>,
+  value_lt?: Maybe<Scalars['String']>,
+  value_lte?: Maybe<Scalars['String']>,
+  value_gt?: Maybe<Scalars['String']>,
+  value_gte?: Maybe<Scalars['String']>,
+  value_contains?: Maybe<Scalars['String']>,
+  value_not_contains?: Maybe<Scalars['String']>,
+  value_starts_with?: Maybe<Scalars['String']>,
+  value_not_starts_with?: Maybe<Scalars['String']>,
+  value_ends_with?: Maybe<Scalars['String']>,
+  value_not_ends_with?: Maybe<Scalars['String']>,
+  AND?: Maybe<Array<EmailWhereInput>>,
+  OR?: Maybe<Array<EmailWhereInput>>,
+  NOT?: Maybe<Array<EmailWhereInput>>,
+};
 
 export type Invitation = {
    __typename?: 'Invitation',
@@ -35,8 +88,7 @@ export type InvitationsSendInput = {
 
 export enum InvitationStatus {
   Pending = 'Pending',
-  Accepted = 'Accepted',
-  Declined = 'Declined'
+  Accepted = 'Accepted'
 }
 
 export type IOrganization = {
@@ -526,6 +578,23 @@ export type UserProfileWhereInput = {
   lastName_not_starts_with?: Maybe<Scalars['String']>,
   lastName_ends_with?: Maybe<Scalars['String']>,
   lastName_not_ends_with?: Maybe<Scalars['String']>,
+  phoneNumber?: Maybe<Scalars['String']>,
+  phoneNumber_not?: Maybe<Scalars['String']>,
+  phoneNumber_in?: Maybe<Array<Scalars['String']>>,
+  phoneNumber_not_in?: Maybe<Array<Scalars['String']>>,
+  phoneNumber_lt?: Maybe<Scalars['String']>,
+  phoneNumber_lte?: Maybe<Scalars['String']>,
+  phoneNumber_gt?: Maybe<Scalars['String']>,
+  phoneNumber_gte?: Maybe<Scalars['String']>,
+  phoneNumber_contains?: Maybe<Scalars['String']>,
+  phoneNumber_not_contains?: Maybe<Scalars['String']>,
+  phoneNumber_starts_with?: Maybe<Scalars['String']>,
+  phoneNumber_not_starts_with?: Maybe<Scalars['String']>,
+  phoneNumber_ends_with?: Maybe<Scalars['String']>,
+  phoneNumber_not_ends_with?: Maybe<Scalars['String']>,
+  emails_every?: Maybe<EmailWhereInput>,
+  emails_some?: Maybe<EmailWhereInput>,
+  emails_none?: Maybe<EmailWhereInput>,
   user?: Maybe<UserWhereInput>,
 };
 
