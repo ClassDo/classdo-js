@@ -115,10 +115,10 @@ export class ClassDoAPIClient {
   }
 
   query<R>(src: R): Promise<ApolloQueryResult<R>> {
-    return this.getClient().query({ query: gql(query(src)) })
+    return this.getClient().query({ query: gql(query(src)), fetchPolicy: 'network-only' })
   }
 
   mutate<R>(src: R): Promise<FetchResult<R>> {
-    return this.getClient().mutate({ mutation: gql(mutation(src)) })
+    return this.getClient().mutate({ mutation: gql(mutation(src)), fetchPolicy: 'no-cache' })
   }
 }
