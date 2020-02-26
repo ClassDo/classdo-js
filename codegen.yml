@@ -1,5 +1,8 @@
 overwrite: true
-schema: "https://api.classdo.com/graphql"
+schema:
+  - "https://classdo.com/graphql":
+      headers:
+        x-api-key: "xxxxxxxxxxxx"
 documents: null
 generates:
   src/generated/graphql.ts:
