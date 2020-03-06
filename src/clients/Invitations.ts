@@ -30,8 +30,27 @@ export class InvitatationsClient {
    * })
    * ```
    * 
+   * If you don't want to send a notificatoin message from classdo, you can use `withoutNotificattion` flag.
+   * 
+   * ```typescript
+   *  client.invitatoins.send(['id'], {
+   *   data: {
+   *     contactFullName: 'joe',
+   *     contactType: ContactType.Email,
+   *     contactInfo: 'example@gmail.com',
+   *     organizationMemberRoleId: 'xxxxxxxxxxxxxxxxxx',
+   *     roomId: 'xxxxxxxxxxxxxxxxxx',
+   *     locale: Enum.Locale.En,
+   *     withoutNotification: true
+   *   }
+   * }).then(v => {
+   *   console.log(v)
+   * })
+   * 
+   * ```
+   * 
    * @param fields Array of [[Invitation]] key names. Returns specified fields as result.
-   * @param args 
+   * @param args
    * @param option
    */
   async send<
