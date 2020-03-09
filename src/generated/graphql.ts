@@ -84,6 +84,7 @@ export type InvitationsSendInput = {
   contactFullName: Scalars['String'],
   organizationMemberRoleId: Scalars['String'],
   roomId: Scalars['ID'],
+  withoutNotification?: Maybe<Scalars['Boolean']>,
 };
 
 export enum InvitationStatus {
@@ -349,6 +350,7 @@ export type Room = {
   description: Scalars['String'],
   organization: Organization,
   members: RoomMembers,
+  exitRoomLink: Scalars['String'],
 };
 
 
@@ -359,6 +361,7 @@ export type RoomMembersArgs = {
 export type RoomCreateInput = {
   name: Scalars['String'],
   description: Scalars['String'],
+  exitRoomLink?: Maybe<Scalars['String']>,
 };
 
 export type RoomEdge = {
@@ -447,7 +450,9 @@ export enum RoomOrderByInput {
   ArchivedAtAsc = 'archivedAt_ASC',
   ArchivedAtDesc = 'archivedAt_DESC',
   OldIdAsc = 'oldId_ASC',
-  OldIdDesc = 'oldId_DESC'
+  OldIdDesc = 'oldId_DESC',
+  ExitRoomLinkAsc = 'exitRoomLink_ASC',
+  ExitRoomLinkDesc = 'exitRoomLink_DESC'
 }
 
 export type Rooms = {

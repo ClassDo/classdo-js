@@ -93,6 +93,16 @@ export class RoomsClient {
    * })
    * ```
    * 
+   * If you want to change "exit room" link url to be along with your own application, you can update it by `exitRoomLink`.
+   *
+   * ```typescript
+   * client.rooms.create(['id'], {
+   *   data: {
+   *     name: 'newRoom',
+   *     description: 'description',
+   *     exitRoomLink: 'https://yourown.application.com'
+   *   }
+   * })
    * @param fields Array of [[Room]] key names. Returns specified fields as result.
    * @param args 
    * @param option 
