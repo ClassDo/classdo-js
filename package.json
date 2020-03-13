@@ -18,7 +18,9 @@
     "codegen": "graphql-codegen --config codegen.yml",
     "test": "jest",
     "clean": "rm -rf dist",
-    "build": "yarn clean && tsc -p ."
+    "build": "yarn clean && tsc -p .",
+    "release": "standard-version",
+    "prerelease": "yarn test && yarn build"
   },
   "bugs": {
     "url": "https://github.com/ClassDo/classdo-js/issues"
@@ -51,6 +53,7 @@
     "graphql": "^14.5.8",
     "husky": "^4.2.3",
     "jest": "^25.1.0",
+    "standard-version": "^7.1.0",
     "ts-jest": "^25.2.0",
     "typedoc": "^0.16.9",
     "typescript": "^3.7.5"
