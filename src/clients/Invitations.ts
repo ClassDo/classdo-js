@@ -6,6 +6,7 @@ import { RoomMemberKeys } from '../models/RoomMembers';
 import { UserKeys } from '../models/Users';
 import { UserProfileKeys } from '../models/UserProfiles';
 import { MutationSendInvitationArgs } from '../generated/graphql';
+import { EmailKeys } from '../models/Emails';
 
 /** Client to call mutation for invitations */
 export class InvitatationsClient {
@@ -46,7 +47,6 @@ export class InvitatationsClient {
    * }).then(v => {
    *   console.log(v)
    * })
-   * 
    * ```
    * 
    * @param fields Array of [[Invitation]] key names. Returns specified fields as result.
@@ -60,12 +60,13 @@ export class InvitatationsClient {
     R_RM extends RoomMemberKeys | null,
     R_RM_U extends UserKeys | null,
     R_RM_U_UP extends UserProfileKeys | null,
+    R_RM_U_UP_E extends EmailKeys | null,
     O extends OrganizationKeys | null
   >(
     fields: I[],
     args: MutationSendInvitationArgs,
-    option?: InvitationOption<R, R_O, R_RM, R_RM_U, R_RM_U_UP, O>
-  ): Promise<Result<InvitationResult<I, R, R_O, R_RM, R_RM_U, R_RM_U_UP, O>>> {
+    option?: InvitationOption<R, R_O, R_RM, R_RM_U, R_RM_U_UP, R_RM_U_UP_E, O>
+  ): Promise<Result<InvitationResult<I, R, R_O, R_RM, R_RM_U, R_RM_U_UP, R_RM_U_UP_E, O>>> {
     const result = await this.client.mutate(
       buildSendInvitationMutation(fields, args, option)
     )

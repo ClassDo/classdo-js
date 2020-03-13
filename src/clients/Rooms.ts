@@ -6,6 +6,7 @@ import { UserKeys } from '../models/Users'
 import { UserProfileKeys } from '../models/UserProfiles'
 import { ViewerRoomsArgs, MutationCreateRoomArgs, MutationDeleteRoomArgs } from '../generated/graphql'
 import { buildViewerQuery } from '../models/Viewer'
+import { EmailKeys } from '../models/Emails'
 
 /** Client to call Rooms schema and mutation for rooms */
 export class RoomsClient {
@@ -31,10 +32,11 @@ export class RoomsClient {
     R_M extends RoomMemberKeys | null,
     R_M_U extends UserKeys | null,
     R_M_U_UP extends UserProfileKeys | null,
+    R_M_U_UP_E extends EmailKeys | null,
   >(fields: R[],
     id: string,
-    option?: RoomOption<R_O, R_M, R_M_U, R_M_U_UP>
-  ): Promise<Result<RoomResult<R, R_O, R_M, R_M_U, R_M_U_UP>>> {
+    option?: RoomOption<R_O, R_M, R_M_U, R_M_U_UP, R_M_U_UP_E>
+  ): Promise<Result<RoomResult<R, R_O, R_M, R_M_U, R_M_U_UP, R_M_U_UP_E>>> {
     const result = await this.client.query({
       viewer: buildViewerQuery(['id'], {
         rooms: { fields: fields, args: { input: { where: { id } } }, with: option }
@@ -66,10 +68,11 @@ export class RoomsClient {
     R_M extends RoomMemberKeys | null,
     R_M_U extends UserKeys | null,
     R_M_U_UP extends UserProfileKeys | null,
+    R_M_U_UP_E extends EmailKeys | null,
   >(fields: R[],
     args?: ViewerRoomsArgs | undefined | null,
-    option?: RoomOption<R_O, R_M, R_M_U, R_M_U_UP>
-  ): Promise<Result<RoomsResult<R, R_O, R_M, R_M_U, R_M_U_UP>>> {
+    option?: RoomOption<R_O, R_M, R_M_U, R_M_U_UP, R_M_U_UP_E>
+  ): Promise<Result<RoomsResult<R, R_O, R_M, R_M_U, R_M_U_UP, R_M_U_UP_E>>> {
     const result = await this.client.query({
       viewer: buildViewerQuery(['id'], {
         rooms: { fields: fields, args: args, with: option }
@@ -103,6 +106,8 @@ export class RoomsClient {
    *     exitRoomLink: 'https://yourown.application.com'
    *   }
    * })
+   * ```
+   * 
    * @param fields Array of [[Room]] key names. Returns specified fields as result.
    * @param args 
    * @param option 
@@ -113,11 +118,12 @@ export class RoomsClient {
     RM extends RoomMemberKeys | null,
     RM_U extends UserKeys | null,
     RM_U_UP extends UserProfileKeys | null,
+    RM_U_UP_E extends EmailKeys | null,
   >(
     fields: R[],
     args: MutationCreateRoomArgs,
-    option?: RoomOption<O, RM, RM_U, RM_U_UP>
-  ): Promise<Result<RoomResult<R, O, RM, RM_U, RM_U_UP>>> {
+    option?: RoomOption<O, RM, RM_U, RM_U_UP, RM_U_UP_E>
+  ): Promise<Result<RoomResult<R, O, RM, RM_U, RM_U_UP, RM_U_UP_E>>> {
     const result = await this.client.mutate(buildCreateRoomMutation(fields, args, option))
     return {
       errors: result.errors,

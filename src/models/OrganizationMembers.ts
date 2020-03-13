@@ -5,6 +5,7 @@ import { pick, preprocessArgs } from '../Utils'
 import { UserKeys, UserResult, UserOption, buildUserQuery } from './Users'
 import { UserProfileKeys } from './UserProfiles'
 import { OrganizationMemberRoleKeys, OrganizationMemberRoleResult,  buildOrganizationMemberRoleQuery } from './OrganizationMemberRoles'
+import { EmailKeys } from './Emails'
 
 export const OrganizationMember = {
   id: types.string
@@ -17,21 +18,23 @@ export type OrganizationMemberResult<
   OM extends OrganizationMemberKeys | null, 
   U extends UserKeys | null,
   U_UP extends UserProfileKeys | null,
+  U_UP_E extends EmailKeys | null,
   OMR extends OrganizationMemberRoleKeys | null
 > =
   ([OM] extends [OrganizationMemberKeys] ? Pick<OrganizationMemberType, OM> : {}) &
-  ([U] extends [UserKeys] ? { user: UserResult<U, U_UP> } : {}) &
+  ([U] extends [UserKeys] ? { user: UserResult<U, U_UP, U_UP_E> } : {}) &
   ([OMR] extends [OrganizationMemberRoleKeys] ? { role: OrganizationMemberRoleResult<OMR> } : {})
 
 export type OrganizationMembersResult<
   OM extends OrganizationMemberKeys | null,
   U extends UserKeys | null,
   U_UP extends UserProfileKeys | null,
+  U_UP_E extends EmailKeys | null,
   OMR extends OrganizationMemberRoleKeys | null
-> = Connection<OrganizationMemberResult<OM, U, U_UP, OMR>>
+> = Connection<OrganizationMemberResult<OM, U, U_UP, U_UP_E, OMR>>
 
-export type OrganizationMembersOption<U, U_UP, OMR> = {
-  user?: { fields: U[], with?: UserOption<U_UP> },
+export type OrganizationMembersOption<U, U_UP, U_UP_E, OMR> = {
+  user?: { fields: U[], with?: UserOption<U_UP, U_UP_E> },
   role?: { fields: OMR[] }
 }
 
@@ -69,12 +72,13 @@ export function buildOrganizationMembersQuery<
   OM extends OrganizationMemberKeys,
   U extends UserKeys | null,
   U_UP extends UserProfileKeys | null,
+  U_UP_E extends EmailKeys | null,
   OMR extends OrganizationMemberRoleKeys | null
 >(
   fields: OM[],
   args?: OrganizationMembersArgs | undefined | null,
-  option?: OrganizationMembersOption<U, U_UP, OMR>
-): OrganizationMembersResult<OM, U, U_UP, OMR> {
+  option?: OrganizationMembersOption<U, U_UP, U_UP_E, OMR>
+): OrganizationMembersResult<OM, U, U_UP, U_UP_E, OMR> {
   const pickedField: any = pick(OrganizationMember, fields)
   if (option && option.user) {
     pickedField['user'] = buildUserQuery(option.user.fields as any, option.user.with || {})

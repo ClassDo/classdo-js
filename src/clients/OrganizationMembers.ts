@@ -5,6 +5,7 @@ import { UserProfileKeys } from '../models/UserProfiles';
 import { OrganizationMemberRoleKeys } from '../models/OrganizationMemberRoles';
 import { OrganizationMembersArgs } from '../generated/graphql';
 import { buildViewerQuery } from '../models/Viewer';
+import { EmailKeys } from '../models/Emails';
 
 /** Client to call OrganizatoinMembers schema */
 export class OrganizationMembersClient {
@@ -28,12 +29,13 @@ export class OrganizationMembersClient {
     OM extends OrganizationMemberKeys | null,
     OM_U extends UserKeys | null,
     OM_U_UP extends UserProfileKeys | null,
+    OM_U_UP_E extends EmailKeys | null,
     OM_OMR extends OrganizationMemberRoleKeys | null,
   >(
     fields: OM[],
     args?: OrganizationMembersArgs | null | undefined,
-    option?: OrganizationMembersOption<OM_U, OM_U_UP, OM_OMR>
-  ): Promise<Result<OrganizationMembersResult<OM, OM_U, OM_U_UP, OM_OMR>>> {
+    option?: OrganizationMembersOption<OM_U, OM_U_UP, OM_U_UP_E, OM_OMR>
+  ): Promise<Result<OrganizationMembersResult<OM, OM_U, OM_U_UP, OM_U_UP_E, OM_OMR>>> {
     const result = await this.client.query({
       viewer: buildViewerQuery(['id'], {
         members: { fields: fields, args: args, with: option }
@@ -62,12 +64,13 @@ export class OrganizationMembersClient {
     OM extends OrganizationMemberKeys | null,
     OM_U extends UserKeys | null,
     OM_U_UP extends UserProfileKeys | null,
+    OM_U_UP_E extends EmailKeys | null,
     OM_OMR extends OrganizationMemberRoleKeys | null,
   >(
     fields: OM[],
     id: string,
-    option?: OrganizationMembersOption<OM_U, OM_U_UP, OM_OMR>
-  ): Promise<Result<OrganizationMemberResult<OM, OM_U, OM_U_UP, OM_OMR>>> {
+    option?: OrganizationMembersOption<OM_U, OM_U_UP, OM_U_UP_E, OM_OMR>
+  ): Promise<Result<OrganizationMemberResult<OM, OM_U, OM_U_UP, OM_U_UP_E, OM_OMR>>> {
     const result = await this.client.query({
       viewer: buildViewerQuery(['id'], {
         members: { fields: fields, args: { input: { where: { id: id } } }, with: option }
