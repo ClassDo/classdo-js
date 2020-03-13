@@ -15,6 +15,46 @@ export enum ContactType {
 }
 
 
+export type Email = {
+   __typename?: 'Email',
+  id: Scalars['ID'],
+  value: Scalars['String'],
+};
+
+export type EmailEdge = {
+   __typename?: 'EmailEdge',
+  node: Email,
+  cursor: Scalars['String'],
+};
+
+export enum EmailOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  CreatedAtAsc = 'createdAt_ASC',
+  CreatedAtDesc = 'createdAt_DESC',
+  UpdatedAtAsc = 'updatedAt_ASC',
+  UpdatedAtDesc = 'updatedAt_DESC',
+  ValueAsc = 'value_ASC',
+  ValueDesc = 'value_DESC'
+}
+
+export type Emails = {
+   __typename?: 'Emails',
+  totalCount: Scalars['Int'],
+  pageInfo: PageInfo,
+  edges: Array<EmailEdge>,
+};
+
+export type EmailsInput = {
+  where?: Maybe<EmailWhereInput>,
+  orderBy?: Maybe<EmailOrderByInput>,
+  skip?: Maybe<Scalars['Int']>,
+  after?: Maybe<Scalars['String']>,
+  before?: Maybe<Scalars['String']>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+};
+
 export type EmailWhereInput = {
   id?: Maybe<Scalars['ID']>,
   id_not?: Maybe<Scalars['ID']>,
@@ -535,6 +575,12 @@ export type UserProfile = {
   firstName: Scalars['String'],
   lastName: Scalars['String'],
   phoneNumber: Scalars['String'],
+  emails?: Maybe<Emails>,
+};
+
+
+export type UserProfileEmailsArgs = {
+  input?: Maybe<EmailsInput>
 };
 
 export type UserProfileWhereInput = {

@@ -11,6 +11,7 @@ import { UserKeys } from '../models/Users';
 import { UserProfileKeys } from '../models/UserProfiles';
 import { MutationAddRoomMembersArgs, MutationDeleteRoomMemberArgs, RoomMembersArgs } from '../generated/graphql';
 import { buildViewerQuery } from '../models/Viewer';
+import { EmailKeys } from '../models/Emails';
 
 /** Client to call RoomMembers schema */
 export class RoomMembersClient {
@@ -33,12 +34,13 @@ export class RoomMembersClient {
   async get<
     RM extends RoomMemberKeys,
     U extends UserKeys | null,
-    U_UP extends UserProfileKeys | null
+    U_UP extends UserProfileKeys | null,
+    U_UP_E extends EmailKeys | null,
   >(
     fields: RM[],
     id: string,
-    option?: RoomMembersOption<U, U_UP>
-  ): Promise<Result<RoomMembersResult<RM, U, U_UP>>> {
+    option?: RoomMembersOption<U, U_UP, U_UP_E>
+  ): Promise<Result<RoomMembersResult<RM, U, U_UP, U_UP_E>>> {
     
     const result = await this.client.query({
       viewer: buildViewerQuery(['id'], {
@@ -73,6 +75,7 @@ export class RoomMembersClient {
    *   console.log(v)
    * })
    * ```
+   * 
    * @param fields Array of [[RoomMember]] key names. Returns specified fields as result.
    * @param roomId Room id.
    * @param args 
@@ -81,13 +84,14 @@ export class RoomMembersClient {
   async list<
     RM extends RoomMemberKeys,
     U extends UserKeys | null,
-    U_UP extends UserProfileKeys | null
+    U_UP extends UserProfileKeys | null,
+    U_UP_E extends EmailKeys | null,
   >(
     fields: RM[],
     roomId: string,
     args?: RoomMembersArgs,
-    option?: RoomMembersOption<U, U_UP>
-  ): Promise<Result<RoomMembersResult<RM, U, U_UP>>> {
+    option?: RoomMembersOption<U, U_UP, U_UP_E>
+  ): Promise<Result<RoomMembersResult<RM, U, U_UP, U_UP_E>>> {
     const result = await this.client.query({
       viewer: buildViewerQuery(['id'], {
         rooms: {
@@ -129,11 +133,12 @@ export class RoomMembersClient {
     RM extends RoomMemberKeys,
     U extends UserKeys | null,
     U_UP extends UserProfileKeys | null,
+    U_UP_E extends EmailKeys | null
   > (
     fields: RM[],
     args: MutationAddRoomMembersArgs,
-    option?: RoomMembersOption<U, U_UP>
-  ): Promise<Result<RoomMemberResult<RM, U, U_UP>[]>> {
+    option?: RoomMembersOption<U, U_UP, U_UP_E>
+  ): Promise<Result<RoomMemberResult<RM, U, U_UP, U_UP_E>[]>> {
     const result = await this.client.mutate(
       buildAddRoomMembersMutation(fields, args, option)
     )

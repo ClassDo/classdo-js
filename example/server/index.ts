@@ -79,7 +79,8 @@ app.get('/api/rooms', async (req, res) => {
           fields: ['id'],
           with: {
             profile: {
-              fields: ['firstName', 'lastName']
+              fields: ['firstName', 'lastName'],
+              with: { emails: { fields: ['id', 'value'] } }
             }
           }
         }

@@ -7,6 +7,7 @@ import { Connection } from './Connection'
 import { RoomMembersArgs } from '../generated/graphql'
 import { UserKeys } from './Users'
 import { UserProfileKeys } from './UserProfiles'
+import { EmailKeys } from './Emails'
 
 export const Room = {
   id: types.string,
@@ -22,10 +23,11 @@ export type RoomResult<
   RM extends RoomMemberKeys | null = null,
   RM_U extends UserKeys | null = null,
   RM_U_UP extends UserProfileKeys | null = null,
+  RM_U_UP_E extends EmailKeys | null = null,
 > =
   Pick<RoomType, R> &
   ([O] extends [OrganizationKeys] ? { organization: Pick<OrganizationType, O> } : {}) &
-  ([RM] extends [RoomMemberKeys] ? { members: RoomMembersResult<RM, RM_U, RM_U_UP> } : {})
+  ([RM] extends [RoomMemberKeys] ? { members: RoomMembersResult<RM, RM_U, RM_U_UP, RM_U_UP_E> } : {})
 
 export type RoomsResult<
   R extends RoomKeys,
@@ -33,11 +35,12 @@ export type RoomsResult<
   RM extends RoomMemberKeys | null,
   RM_U extends UserKeys | null,
   RM_U_UP extends UserProfileKeys | null,
-> = Connection<RoomResult<R, O, RM, RM_U, RM_U_UP>>
+  RM_U_UP_E extends EmailKeys | null,
+> = Connection<RoomResult<R, O, RM, RM_U, RM_U_UP, RM_U_UP_E>>
 
-export type RoomOption<O, RM, RM_U, RM_U_UP> = {
+export type RoomOption<O, RM, RM_U, RM_U_UP, RM_U_UP_E> = {
   organization?: { fields: O[] },
-  members?: { args?: RoomMembersArgs, fields: RM[], with?: RoomMembersOption<RM_U, RM_U_UP> }
+  members?: { args?: RoomMembersArgs, fields: RM[], with?: RoomMembersOption<RM_U, RM_U_UP, RM_U_UP_E> }
 }
 
 /**
@@ -72,8 +75,9 @@ function resolveOption<
   O extends OrganizationKeys | null,
   RM extends RoomMemberKeys | null,
   RM_U extends UserKeys | null,
-  RM_U_UP extends UserProfileKeys | null
->(option: RoomOption<O, RM, RM_U, RM_U_UP>) {
+  RM_U_UP extends UserProfileKeys | null,
+  RM_U_UP_E extends EmailKeys | null
+>(option: RoomOption<O, RM, RM_U, RM_U_UP, RM_U_UP_E>) {
   const org = option.organization
     ? { organization: buildOrganizationQuery(option.organization.fields as any) }
     : {}
@@ -97,10 +101,11 @@ export function buildRoomQuery
    O extends OrganizationKeys | null,
    RM extends RoomMemberKeys | null,
    RM_U extends UserKeys | null,
-   RM_U_UP extends UserProfileKeys | null  
+   RM_U_UP extends UserProfileKeys | null,
+   RM_U_UP_E extends EmailKeys | null
   >(
     fields: R[],
-    option?: RoomOption<O, RM, RM_U, RM_U_UP>
+    option?: RoomOption<O, RM, RM_U, RM_U_UP, RM_U_UP_E>
   ): RoomResult<R, O, RM, RM_U, RM_U_UP> {
   const pickedFields = pick(Room, fields)
   const resolvedOption = option ? resolveOption(option) : {} as any
@@ -116,11 +121,12 @@ export function buildRoomsQuery
    RM extends RoomMemberKeys | null,
    RM_U extends UserKeys | null,
    RM_U_UP extends UserProfileKeys | null,
+   RM_U_UP_E extends EmailKeys | null,
   >(
     fields: R[],
     args?: ViewerRoomsArgs | undefined | null,
-    option?: RoomOption<O, RM, RM_U, RM_U_UP>
-  ): RoomsResult<R, O, RM, RM_U, RM_U_UP> {
+    option?: RoomOption<O, RM, RM_U, RM_U_UP, RM_U_UP_E>
+  ): RoomsResult<R, O, RM, RM_U, RM_U_UP, RM_U_UP_E> {
   const pickedFields: any = pick(Room, fields)
   const resolvedOption = option ? resolveOption(option) : {}
   return buildRooms(args, { ...pickedFields, ...resolvedOption })
@@ -135,11 +141,12 @@ export function buildCreateRoomMutation
    RM extends RoomMemberKeys | null,
    RM_U extends UserKeys | null,
    RM_U_UP extends UserProfileKeys | null,
+   RM_U_UP_E extends EmailKeys | null,
   >(
     fields: R[],
     args: MutationCreateRoomArgs,
-    option?: RoomOption<O, RM, RM_U, RM_U_UP>
-  ): { createRoom: RoomResult<R, O, RM, RM_U, RM_U_UP> } {
+    option?: RoomOption<O, RM, RM_U, RM_U_UP, RM_U_UP_E>
+  ): { createRoom: RoomResult<R, O, RM, RM_U, RM_U_UP, RM_U_UP_E> } {
   const pickedFields: any = pick(Room, fields)
   const resolvedOption = option ? resolveOption(option) : {}
   return {
