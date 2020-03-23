@@ -3,14 +3,17 @@ import App from './App.vue'
 import VueRouter from 'vue-router'
 import Login from './components/Login.vue'
 import Organization from './components/Organization.vue'
+import Billing from './components/Billing.vue'
 
 Vue.config.productionTip = false
 Vue.use(VueRouter)
 
 const router = new VueRouter({
   routes: [
-    { path: '/login', component: Login },
-    { path: '/organization', component: Organization }
+    { path: '/', redirect: () => '/login' },
+    { path: '/login', component: Login, name: 'Login' },
+    { path: '/organization', component: Organization, name: 'Organization' },
+    { path: '/billing', component: Billing, name: 'Billing' },
   ],
   mode: 'history'
 })

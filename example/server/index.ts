@@ -119,6 +119,32 @@ app.post('/api/invite', async (req, res) => {
   res.json(result.data)
 })
 
+app.get('/api/billing', async (req, res) => {
+  const billing = await client.billing.get(
+    ['id', 'month', 'year'],
+    { input: { year: Number(req.query.year), month: Number(req.query.month) } },
+    {
+      records: {
+        fields: ['id', 'date'],
+        with: {
+          usages: {
+            fields: ['paidSec', 'amount', 'ledgerType'],
+            with: {
+              user: {
+                fields: ['id'], with: { profile: { fields: ['firstName'] } }
+              },
+              room: { fields: ['name'] }
+            }
+          },
+          freeCredits: { fields: ['paidSec', 'amount', 'ledgerType']},
+          topups: { fields: ['paidSec', 'amount', 'ledgerType']},
+        }
+      }
+    }
+  )
+  res.json(billing.data)
+})
+
 app.listen(port, err => {
   if (err) {
     return console.error(err);

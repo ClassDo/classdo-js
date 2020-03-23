@@ -14,6 +14,7 @@ import { ViewerClient } from './Viewer'
 import { OrganizationMembersClient } from './OrganizationMembers'
 import { RoomMembersClient } from './RoomMembers'
 import { InvitatationsClient } from './Invitations'
+import { BillingClient } from './Billing'
 
 /** @ignore */
 const url = process.env.CLASSDO_API_URL || 'https://api.classdo.com/graphql'
@@ -82,6 +83,8 @@ export class ClassDoAPIClient {
   public roomMembers: RoomMembersClient
   /** Client to call mutation for invitations */
   public invitatoins: InvitatationsClient
+  /** Client to call Billing schema */
+  public billing: BillingClient
 
   /**
    * The ClassDoAPIClient constructor
@@ -103,6 +106,7 @@ export class ClassDoAPIClient {
     this.organizationMembers = new OrganizationMembersClient(this)
     this.roomMembers = new RoomMembersClient(this)
     this.invitatoins = new InvitatationsClient(this)
+    this.billing = new BillingClient(this)
   }
 
   /**

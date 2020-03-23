@@ -8,6 +8,7 @@ import { UserProfileKeys } from '../models/UserProfiles';
 import { OrganizationMemberKeys } from '../models/OrganizationMembers';
 import { OrganizationMemberRoleKeys } from '../models/OrganizationMemberRoles';
 import { EmailKeys } from '../models/Emails';
+import { BillingKeys, BillingRecordKeys, UsageLedgerKeys } from '../models/Billing';
 
  /** Client to call Viewer schema */
 export class ViewerClient {
@@ -40,14 +41,25 @@ export class ViewerClient {
     OM_U_UP_E extends EmailKeys | null,
     OM_OMR extends OrganizationMemberRoleKeys | null,
     OMR extends OrganizationMemberRoleKeys | null,
+    B extends BillingKeys | null,
+    BR extends BillingRecordKeys | null,
+    BR_UL extends UsageLedgerKeys | null,
+    BR_UL_U extends UserKeys | null,
+    BR_UL_U_P extends UserProfileKeys | null,
+    BR_UL_U_P_E extends EmailKeys | null,
+    BR_UL_R extends RoomKeys | null,
+    BR_FUL extends UsageLedgerKeys | null,
+    BR_TUL extends UsageLedgerKeys | null
   >(fields: V[], option?: ViewerOption<
     R, R_O, R_M, R_M_U, R_M_U_UP, R_M_U_UP_E,
     OM, OM_U, OM_U_UP, OM_U_UP_E, OM_OMR,
-    OMR
+    OMR,
+    B, BR, BR_UL, BR_UL_U, BR_UL_U_P, BR_UL_U_P_E, BR_UL_R, BR_FUL, BR_TUL
   >):
     Promise<Result<
       ViewerResult<
-        V, R, R_O, R_M, R_M_U, R_M_U_UP, R_M_U_UP_E, OM, OM_U, OM_U_UP, OM_U_UP_E, OM_OMR, OMR
+        V, R, R_O, R_M, R_M_U, R_M_U_UP, R_M_U_UP_E, OM, OM_U, OM_U_UP, OM_U_UP_E, OM_OMR, OMR,
+        B, BR, BR_UL, BR_UL_U, BR_UL_U_P, BR_UL_U_P_E, BR_UL_R, BR_FUL, BR_TUL
       >
     >> {
     const result = await this.client.query({ viewer: buildViewerQuery(fields, option) })
