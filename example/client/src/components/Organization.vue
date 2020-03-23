@@ -64,9 +64,9 @@ import accessToken from '../apis/accessToken'
 
 type Organization = { id: string; name: string }
 type Profile = { firstName: string; lastName: string }
-type User = { id: string; profile: Profile }
+export type User = { id: string; profile: Profile }
 type RoomMember = { id: string; name: string; user: User }
-type Room = { id: string; name: string; members: RoomMember[] }
+export type Room = { id: string; name: string; members: RoomMember[] }
 type State = {
   organization: Organization | null;
   rooms: Room[];

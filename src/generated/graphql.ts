@@ -9,6 +9,28 @@ export type Scalars = {
   DateTime: any,
 };
 
+export type Billing = {
+   __typename?: 'Billing',
+  id: Scalars['ID'],
+  year: Scalars['Int'],
+  month: Scalars['Int'],
+  records: Array<BillingRecord>,
+};
+
+export type BillingRecord = {
+   __typename?: 'BillingRecord',
+  id: Scalars['ID'],
+  date: Scalars['String'],
+  usages: Array<UsageLedger>,
+  freeCredits: Array<UsageLedger>,
+  topups: Array<UsageLedger>,
+};
+
+export type BillingWhereInput = {
+  year: Scalars['Int'],
+  month: Scalars['Int'],
+};
+
 export enum ContactType {
   PhoneNumber = 'PhoneNumber',
   Email = 'Email'
@@ -129,7 +151,8 @@ export type InvitationsSendInput = {
 
 export enum InvitationStatus {
   Pending = 'Pending',
-  Accepted = 'Accepted'
+  Accepted = 'Accepted',
+  Cancelled = 'Cancelled'
 }
 
 export type IOrganization = {
@@ -141,6 +164,14 @@ export type IOrganization = {
   rooms: Rooms,
   roles: OrganizationMemberRoles,
 };
+
+export enum LedgerType {
+  Use = 'Use',
+  UseRecording = 'UseRecording',
+  Topup = 'Topup',
+  AutoTopup = 'AutoTopup',
+  AddFreeCredit = 'AddFreeCredit'
+}
 
 export enum Locale {
   En = 'En',
@@ -563,6 +594,19 @@ export type RoomWhereInput = {
   members_none?: Maybe<RoomMemberWhereInput>,
 };
 
+export type UsageLedger = {
+   __typename?: 'UsageLedger',
+  id: Scalars['ID'],
+  ledgerType: LedgerType,
+  paidSec?: Maybe<Scalars['Int']>,
+  timestamp: Scalars['DateTime'],
+  amount: Scalars['Int'],
+  user?: Maybe<User>,
+  room?: Maybe<Room>,
+  classDoUserId?: Maybe<Scalars['String']>,
+  classDoRoomId?: Maybe<Scalars['String']>,
+};
+
 export type User = {
    __typename?: 'User',
   id: Scalars['ID'],
@@ -679,6 +723,7 @@ export type Viewer = IOrganization & {
   members: OrganizationMembers,
   rooms: Rooms,
   roles: OrganizationMemberRoles,
+  billing: Billing,
 };
 
 
@@ -694,4 +739,9 @@ export type ViewerRoomsArgs = {
 
 export type ViewerRolesArgs = {
   input?: Maybe<RolesInput>
+};
+
+
+export type ViewerBillingArgs = {
+  input: BillingWhereInput
 };

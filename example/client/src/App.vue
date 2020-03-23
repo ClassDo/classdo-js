@@ -1,6 +1,12 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <div id="nav" v-if="!isLoginPage">
+      <router-link to="/organization">Home</router-link> |
+      <router-link to="/billing">Billing</router-link>
+    </div>
+    <div class="content">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -8,7 +14,13 @@
 import Vue from 'vue';
 
 export default Vue.extend({
-  name: 'App'
+  name: 'App',
+  computed: {
+    isLoginPage() {
+      return this.$route.name === 'Login'
+    }
+  }
+
 });
 </script>
 
