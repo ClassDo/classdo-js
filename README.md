@@ -1,6 +1,6 @@
 # classdo.js
 
-ClassDo API client for browsers and NodeJS.
+ClassDo API client for NodeJS.
 
 [![CircleCI](https://circleci.com/gh/ClassDo/classdo-js.svg?style=svg)](https://circleci.com/gh/ClassDo/classdo-js)
 
