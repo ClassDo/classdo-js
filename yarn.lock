@@ -8253,9 +8253,9 @@ type@^2.0.0:
   integrity sha512-KBt58xCHry4Cejnc2ISQAF7QY+ORngsWfxezO68+12hKV6lQY8P/psIkcbjeHWn7MqcgciWJyCCevFMJdIXpow==
 
 typed-graphqlify@^2.2.3:
-  version "2.4.3"
-  resolved "https://registry.yarnpkg.com/typed-graphqlify/-/typed-graphqlify-2.4.3.tgz#91ffd152f02834b7479d0fd1e52fcc6cd37576fc"
-  integrity sha512-rYkz5+p/q+aIC9gVyWb/TTdGYsbf2cUNGVhXeFRpjEPMitEkz1Q+Da8E40wQDdBtlJCOrlKkvAhDB4QjBxpICA==
+  version "2.4.4"
+  resolved "https://registry.yarnpkg.com/typed-graphqlify/-/typed-graphqlify-2.4.4.tgz#e7354053b81dd858cd04c524e39722d27572fded"
+  integrity sha512-ZTjFeRmve31nFKgzKnduqiXqaWACP/eVtNuc85GADFOHyjGLCZxA43ylSueXIhQgZLeVsocE94JLVc7pL1064A==
 
 typedarray-to-buffer@^3.1.5:
   version "3.1.5"
