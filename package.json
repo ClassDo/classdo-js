@@ -44,7 +44,7 @@
     "typed-graphqlify": "^2.2.3"
   },
   "devDependencies": {
-    "@commitlint/cli": "^11.0.0",
+    "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^11.0.0",
     "@graphql-codegen/cli": "^1.11.2",
     "@graphql-codegen/typescript": "^1.13.1",
