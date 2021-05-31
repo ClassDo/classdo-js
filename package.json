@@ -55,7 +55,7 @@
     "jest": "^25.1.0",
     "standard-version": "^9.0.0",
     "ts-jest": "^25.2.0",
-    "typedoc": "^0.19.1",
+    "typedoc": "^0.20.36",
     "typescript": "^3.7.5"
   },
   "husky": {
